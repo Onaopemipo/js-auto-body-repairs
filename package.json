@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "validate:foundation": "node scripts/validateFoundation.mjs",
-    "validate": "npm run validate:foundation && npm run typecheck && npm run lint && npm run build"
+    "validate": "npm run validate:foundation && npm run typecheck && npm run lint && npm run build",
+    "brand:process": "node scripts/brand/processLogo.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -18,6 +19,7 @@
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "sharp": "^0.35.3",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
