@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
+import { FloatingContactActions } from "@/components/layout/floating-contact-actions";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { brandConfig } from "@/config/brand";
@@ -38,6 +39,10 @@ export const metadata: Metadata = {
     description: siteConfig.description,
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: brandConfig.logo.favicon,
+    apple: brandConfig.logo.appleTouch,
+  },
 };
 
 export default function RootLayout({
@@ -54,6 +59,7 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
+        <FloatingContactActions />
       </body>
     </html>
   );
