@@ -10,6 +10,7 @@ import { ServicesOverview } from "@/components/home/services-overview";
 import { TestimonialsPreview } from "@/components/home/testimonials-preview";
 import { TrustStrip } from "@/components/home/trust-strip";
 import { WhyChooseUs } from "@/components/home/why-choose-us";
+import { Reveal } from "@/components/motion/reveal";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
@@ -31,15 +32,33 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <TrustStrip />
-      <ServicesOverview />
-      <RepairProcess />
-      <WhyChooseUs />
-      <GalleryPreview />
-      <TestimonialsPreview />
-      <InsuranceSupport />
-      <LocationPreview />
-      <FinalCta />
+      <Reveal>
+        <TrustStrip />
+      </Reveal>
+      <Reveal>
+        <ServicesOverview />
+      </Reveal>
+      <Reveal>
+        <RepairProcess />
+      </Reveal>
+      <Reveal>
+        <WhyChooseUs />
+      </Reveal>
+      <Reveal>
+        <GalleryPreview />
+      </Reveal>
+      <Reveal>
+        <TestimonialsPreview />
+      </Reveal>
+      <Reveal>
+        <InsuranceSupport />
+      </Reveal>
+      <Reveal>
+        <LocationPreview />
+      </Reveal>
+      <Reveal>
+        <FinalCta />
+      </Reveal>
     </>
   );
 }

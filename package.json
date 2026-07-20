@@ -9,15 +9,17 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "validate:foundation": "node scripts/validateFoundation.mjs",
-    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run typecheck && npm run lint && npm run build",
+    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run typecheck && npm run lint && npm run build",
     "brand:process": "node scripts/brand/processLogo.mjs",
     "validate:brand-core": "node scripts/validateBrandCore.mjs",
     "validate:navigation": "node scripts/validateNavigation.mjs",
-    "validate:homepage": "node scripts/validateHomepage.mjs"
+    "validate:homepage": "node scripts/validateHomepage.mjs",
+    "validate:motion": "node scripts/validateMotionFoundation.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
     "clsx": "^2.1.1",
+    "lenis": "^1.3.25",
     "lucide-react": "^1.25.0",
     "motion": "^12.42.2",
     "next": "16.2.10",

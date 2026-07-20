@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { FloatingContactActions } from "@/components/layout/floating-contact-actions";
+import { MotionShell } from "@/components/motion/motion-shell";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { brandConfig } from "@/config/brand";
@@ -54,12 +55,14 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        <SiteHeader />
-        <main id="main-content" className="page-main">
-          {children}
-        </main>
-        <SiteFooter />
-        <FloatingContactActions />
+        <MotionShell>
+          <SiteHeader />
+          <main id="main-content" className="page-main">
+            {children}
+          </main>
+          <SiteFooter />
+          <FloatingContactActions />
+        </MotionShell>
       </body>
     </html>
   );
