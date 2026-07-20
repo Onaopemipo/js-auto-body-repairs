@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { brandConfig } from "@/config/brand";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 

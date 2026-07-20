@@ -1,6 +1,9 @@
+import { brandConfig } from "./brand";
+
 export const siteConfig = {
-  name: "JS Auto Body Repairs",
-  shortName: "JS Auto Body",
+  name: brandConfig.name,
+  shortName: brandConfig.shortName,
+  strapline: brandConfig.strapline,
   description:
     "Professional collision repair, panel restoration, paint refinishing and vehicle body repair services.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://jsautobodyrepairs.com.au",

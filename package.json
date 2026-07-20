@@ -9,8 +9,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "validate:foundation": "node scripts/validateFoundation.mjs",
-    "validate": "npm run validate:foundation && npm run typecheck && npm run lint && npm run build",
-    "brand:process": "node scripts/brand/processLogo.mjs"
+    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run typecheck && npm run lint && npm run build",
+    "brand:process": "node scripts/brand/processLogo.mjs",
+    "validate:brand-core": "node scripts/validateBrandCore.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
