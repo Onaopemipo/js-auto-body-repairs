@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowUpRight, BadgeCheck, ShieldCheck } from "lucide-react";
 
+import { HeroExperience } from "@/components/hero3d/hero-experience";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { brandConfig } from "@/config/brand";
@@ -17,19 +18,8 @@ export function HomeHero() {
         className="absolute inset-0 bg-[radial-gradient(circle_at_76%_42%,rgba(231,7,11,0.22),transparent_28%)]"
       />
 
-      <div
-        aria-hidden="true"
-        className="absolute inset-y-0 right-0 w-[58%] opacity-85"
-      >
-        <div className="absolute left-[10%] top-[16%] h-[68%] w-[80%] rounded-[48%_52%_42%_58%/56%_44%_56%_44%] border border-white/10 bg-[linear-gradient(145deg,#242427_0%,#0e0e10_38%,#e7070b_39%,#7d0508_55%,#161618_56%,#080809_100%)] shadow-[0_50px_120px_rgba(0,0,0,0.65)]" />
-
-        <div className="absolute left-[20%] top-[30%] h-[24%] w-[52%] skew-x-[-14deg] rounded-[45%] border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.18),rgba(24,24,26,0.85))]" />
-
-        <div className="absolute bottom-[15%] left-[14%] h-28 w-28 rounded-full border-[18px] border-[#111114] bg-[#55555a] shadow-[0_0_0_8px_rgba(255,255,255,0.06)] sm:h-36 sm:w-36" />
-
-        <div className="absolute bottom-[15%] right-[13%] h-28 w-28 rounded-full border-[18px] border-[#111114] bg-[#55555a] shadow-[0_0_0_8px_rgba(255,255,255,0.06)] sm:h-36 sm:w-36" />
-
-        <div className="absolute bottom-[12%] left-[8%] h-1 w-[78%] bg-[linear-gradient(90deg,transparent,rgba(231,7,11,0.7),transparent)] blur-sm" />
+      <div className="absolute inset-y-0 right-0 hidden w-[58%] lg:block">
+        <HeroExperience />
       </div>
 
       <Container className="relative flex min-h-[calc(100svh-var(--header-height))] items-center py-16 sm:py-20">
