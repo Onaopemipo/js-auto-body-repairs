@@ -1,6 +1,6 @@
 import { ArrowDown, ArrowUpRight, BadgeCheck, ShieldCheck } from "lucide-react";
 
-import { HeroExperience } from "@/components/hero3d/hero-experience";
+import { HeroExperienceFallback } from "@/components/hero3d/hero-experience-fallback";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { brandConfig } from "@/config/brand";
@@ -19,7 +19,7 @@ export function HomeHero() {
       />
 
       <div className="absolute inset-y-0 right-0 hidden w-[58%] lg:block">
-        <HeroExperience />
+        <HeroExperienceFallback />
       </div>
 
       <Container className="relative flex min-h-[calc(100svh-var(--header-height))] items-center py-16 sm:py-20">
