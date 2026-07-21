@@ -1,6 +1,6 @@
+import { HeroPhotographicMedia } from "@/components/hero-media/hero-photographic-media";
 import { ArrowDown, ArrowUpRight, BadgeCheck, ShieldCheck } from "lucide-react";
 
-import { HeroExperienceFallback } from "@/components/hero3d/hero-experience-fallback";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { brandConfig } from "@/config/brand";
@@ -8,19 +8,7 @@ import { brandConfig } from "@/config/brand";
 export function HomeHero() {
   return (
     <section className="relative isolate min-h-[calc(100svh-var(--header-height))] overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(100deg,rgba(8,8,9,0.98)_0%,rgba(8,8,9,0.90)_44%,rgba(8,8,9,0.42)_72%,rgba(8,8,9,0.84)_100%)]"
-      />
-
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(circle_at_76%_42%,rgba(231,7,11,0.22),transparent_28%)]"
-      />
-
-      <div className="absolute inset-y-0 right-0 hidden w-[58%] lg:block">
-        <HeroExperienceFallback />
-      </div>
+      <HeroPhotographicMedia />
 
       <Container className="relative flex min-h-[calc(100svh-var(--header-height))] items-center py-16 sm:py-20">
         <div className="max-w-4xl">
