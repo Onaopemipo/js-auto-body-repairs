@@ -2,11 +2,16 @@ import { randomUUID } from "node:crypto";
 
 import { NextResponse } from "next/server";
 
-import { sendQuoteEmail } from "@/lib/quote/email";
+import { deliverQuote } from "@/lib/quote/deliver-quote";
+import {
+  isProductionEnvironment,
+  isTurnstileConfigured,
+} from "@/lib/quote/delivery-config";
 import { validateQuoteFiles } from "@/lib/quote/file-validation";
 import { quoteRequestSchema } from "@/lib/quote/quote-schema";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 const minimumCompletionTimeMs = 3000;
 const rateLimitWindowMs = 15 * 60 * 1000;
@@ -85,7 +90,7 @@ async function verifyTurnstile({
   const secret = process.env.TURNSTILE_SECRET_KEY;
 
   if (!secret) {
-    return process.env.NODE_ENV !== "production";
+    return !isProductionEnvironment();
   }
 
   if (!token) {
@@ -139,6 +144,13 @@ function createErrorResponse(
 }
 
 export async function POST(request: Request) {
+  if (isProductionEnvironment() && !isTurnstileConfigured()) {
+    return createErrorResponse(
+      "Quote security verification is not configured.",
+      503,
+    );
+  }
+
   if (!hasValidOrigin(request)) {
     return createErrorResponse("Invalid request origin.", 403);
   }
@@ -174,31 +186,18 @@ export async function POST(request: Request) {
 
     const validation = quoteRequestSchema.safeParse({
       fullName: formData.get("fullName"),
-
       email: formData.get("email"),
-
       phone: formData.get("phone"),
-
       preferredContact: formData.get("preferredContact"),
-
       vehicleMake: formData.get("vehicleMake"),
-
       vehicleModel: formData.get("vehicleModel"),
-
       vehicleYear: formData.get("vehicleYear"),
-
       registration: formData.get("registration") || "",
-
       service: formData.get("service"),
-
       description: formData.get("description"),
-
       consent: formData.get("consent"),
-
       website: formData.get("website") || "",
-
       startedAt: formData.get("startedAt"),
-
       turnstileToken: formData.get("cf-turnstile-response") || "",
     });
 
@@ -243,18 +242,25 @@ export async function POST(request: Request) {
 
     const requestId = randomUUID();
 
-    await sendQuoteEmail({
+    const receivedAt = new Date().toISOString();
+
+    const delivery = await deliverQuote({
       quote,
       files,
       requestId,
+      receivedAt,
     });
+
+    const localDevelopment = delivery.mode === "local-development";
 
     return NextResponse.json(
       {
         ok: true,
         requestId,
-        message:
-          "Your quote request has been sent. The workshop will contact you about the next step.",
+        deliveryMode: delivery.mode,
+        message: localDevelopment
+          ? "Your test quote was saved locally. SMTP delivery is not configured in this development environment."
+          : "Your quote request has been sent. The workshop will contact you about the next step.",
       },
       {
         headers: {
@@ -273,7 +279,7 @@ export async function POST(request: Request) {
     return createErrorResponse(
       isUploadError
         ? message
-        : "We could not send your request. Please call 0410 466 916 or try again later.",
+        : "We could not process your request. Please call 0410 466 916 or try again later.",
       isUploadError ? 400 : 500,
     );
   }

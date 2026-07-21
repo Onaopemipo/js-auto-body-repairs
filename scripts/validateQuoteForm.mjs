@@ -7,6 +7,9 @@ const requiredFiles = [
   "src/lib/quote/quote-schema.ts",
   "src/lib/quote/file-validation.ts",
   "src/lib/quote/email.ts",
+  "src/lib/quote/delivery-config.ts",
+  "src/lib/quote/deliver-quote.ts",
+  "src/lib/quote/local-quote-store.ts",
 ];
 
 const failures = requiredFiles.filter((file) => !fs.existsSync(file));
@@ -26,19 +29,40 @@ const form = fs.readFileSync(
   "utf8",
 );
 
+const delivery = fs.readFileSync("src/lib/quote/deliver-quote.ts", "utf8");
+
+const localStore = fs.readFileSync(
+  "src/lib/quote/local-quote-store.ts",
+  "utf8",
+);
+
 for (const [label, source, value] of [
   ["Node runtime", route, 'runtime = "nodejs"'],
   ["multipart parsing", route, "request.formData()"],
   ["Turnstile validation", route, "siteverify"],
   ["rate limiting", route, "checkRateLimit"],
-  ["SMTP delivery", route, "sendQuoteEmail"],
+  ["delivery adapter", route, "deliverQuote"],
   ["photo input", form, 'name="photos"'],
   ["honeypot", form, 'name="website"'],
   ["consent", form, 'name="consent"'],
+  ["SMTP mode", delivery, 'mode: "smtp"'],
+  ["development fallback", delivery, "storeQuoteLocally"],
+  [
+    "production guard",
+    localStore,
+    "Local quote storage is disabled in production.",
+  ],
+  ["local submission record", localStore, "submission.json"],
 ]) {
   if (!source.includes(value)) {
     failures.push(`Missing requirement: ${label}`);
   }
+}
+
+const gitignore = fs.readFileSync(".gitignore", "utf8");
+
+if (!gitignore.includes(".local-data/")) {
+  failures.push("Local quote data is not excluded from Git.");
 }
 
 if (failures.length > 0) {
@@ -51,4 +75,6 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`Quote form validation passed: ${requiredFiles.length} files.`);
+console.log(
+  `Quote form validation passed: ${requiredFiles.length} files and local development delivery protection.`,
+);
