@@ -53,9 +53,12 @@ const heroExperience = fs.readFileSync(
   "utf8",
 );
 
-const hero = fs.readFileSync("src/components/home/home-hero.tsx", "utf8");
+const homepageHero = fs.readFileSync(
+  "src/components/home/home-hero.tsx",
+  "utf8",
+);
 
-const requirements = [
+const checks = [
   ["Canvas DPR profile", adaptiveCanvas, "dpr={profile.dpr}"],
   ["Canvas shadows profile", adaptiveCanvas, "shadows={profile.shadows}"],
   ["Lazy scene registry", sceneRegistry, "lazy(async"],
@@ -63,13 +66,26 @@ const requirements = [
   ["Client-only dynamic import", heroExperience, "ssr: false"],
   ["WebGL detection", heroExperience, 'getContext("webgl'],
   ["Reduced-motion fallback", heroExperience, "prefers-reduced-motion"],
-  ["Homepage mount", hero, "<HeroExperience"],
 ];
 
-for (const [label, source, needle] of requirements) {
+for (const [label, source, needle] of checks) {
   if (!source.includes(needle)) {
     failures.push(`Missing check: ${label}`);
   }
+}
+
+const mountsThreeHero = homepageHero.includes("<HeroExperience");
+
+const mountsPhotographicHero = homepageHero.includes("<HeroPhotographicMedia");
+
+if (!mountsThreeHero && !mountsPhotographicHero) {
+  failures.push(
+    "Homepage does not mount either the Three.js hero or the photographic hero.",
+  );
+}
+
+if (mountsThreeHero && mountsPhotographicHero) {
+  failures.push("Homepage mounts both Three.js and photographic hero systems.");
 }
 
 if (failures.length) {
@@ -80,6 +96,10 @@ if (failures.length) {
   process.exit(1);
 }
 
+const runtimeMode = mountsThreeHero
+  ? "active Three.js hero"
+  : "dormant Three.js runtime with photographic hero";
+
 console.log(
-  `Three.js foundation validation passed: ${requiredFiles.length} files and ${requirements.length} architecture checks.`,
+  `Three.js foundation validation passed: ${requiredFiles.length} files, ${checks.length} architecture checks, and ${runtimeMode}.`,
 );
