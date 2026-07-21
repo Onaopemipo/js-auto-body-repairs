@@ -9,13 +9,15 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "validate:foundation": "node scripts/validateFoundation.mjs",
-    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run validate:three && npm run typecheck && npm run lint && npm run build",
+    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run validate:three && npm run validate:hero-media && npm run validate:content-pages && npm run typecheck && npm run lint && npm run build",
     "brand:process": "node scripts/brand/processLogo.mjs",
     "validate:brand-core": "node scripts/validateBrandCore.mjs",
     "validate:navigation": "node scripts/validateNavigation.mjs",
     "validate:homepage": "node scripts/validateHomepage.mjs",
     "validate:motion": "node scripts/validateMotionFoundation.mjs",
-    "validate:three": "node scripts/validateThreeFoundation.mjs"
+    "validate:three": "node scripts/validateThreeFoundation.mjs",
+    "validate:hero-media": "node scripts/validatePhotographicHero.mjs",
+    "validate:content-pages": "node scripts/validateContentPages.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
