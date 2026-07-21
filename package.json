@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "validate:foundation": "node scripts/validateFoundation.mjs",
-    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run validate:three && npm run validate:hero-media && npm run validate:content-pages && npm run typecheck && npm run lint && npm run build",
+    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run validate:three && npm run validate:hero-media && npm run validate:content-pages && npm run validate:quote-form && npm run typecheck && npm run lint && npm run build",
     "brand:process": "node scripts/brand/processLogo.mjs",
     "validate:brand-core": "node scripts/validateBrandCore.mjs",
     "validate:navigation": "node scripts/validateNavigation.mjs",
@@ -17,7 +17,8 @@
     "validate:motion": "node scripts/validateMotionFoundation.mjs",
     "validate:three": "node scripts/validateThreeFoundation.mjs",
     "validate:hero-media": "node scripts/validatePhotographicHero.mjs",
-    "validate:content-pages": "node scripts/validateContentPages.mjs"
+    "validate:content-pages": "node scripts/validateContentPages.mjs",
+    "validate:quote-form": "node scripts/validateQuoteForm.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -31,16 +32,19 @@
     "lucide-react": "^1.25.0",
     "motion": "^12.42.2",
     "next": "16.2.10",
+    "nodemailer": "^9.0.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "sharp": "^0.35.3",
     "tailwind-merge": "^3.6.0",
     "three": "^0.185.1",
-    "three-stdlib": "^2.36.1"
+    "three-stdlib": "^2.36.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/nodemailer": "^8.0.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.185.1",

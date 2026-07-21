@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Camera, Clock3, Phone, ShieldCheck } from "lucide-react";
 
+import { QuoteRequestForm } from "@/components/forms/quote-request-form";
 import { PageHero } from "@/components/pages/page-hero";
 import { Container } from "@/components/ui/container";
 import { siteContent } from "@/content/site-content";
@@ -18,24 +20,88 @@ export default function RequestEstimatePage() {
         title={siteContent.quote.title}
         description={siteContent.quote.description}
       />
+
       <section className="section-spacing">
-        <Container>
-          <div className="mx-auto max-w-3xl border border-white/10 bg-[var(--page-background-elevated)] p-8 sm:p-10">
-            <p className="eyebrow">Quote form coming next</p>
+        <Container className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
+          <aside>
+            <p className="eyebrow">Before you start</p>
+
             <h2 className="mt-5 text-3xl font-semibold">
-              Tell us about your vehicle.
+              Clear details help us assess the next step.
             </h2>
-            <p className="body-copy mt-5">
-              The next phase will add the complete quote form, including contact
-              details, vehicle information, repair description and photo
-              uploads.
-            </p>
-            <a
-              href={siteContent.business.phoneHref}
-              className="mt-8 inline-flex min-h-12 items-center justify-center bg-[var(--brand-primary)] px-5 text-xs font-bold uppercase tracking-[0.075em] text-white"
-            >
-              Call {siteContent.business.phoneDisplay}
-            </a>
+
+            <div className="mt-8 space-y-7">
+              <div className="flex gap-4">
+                <Camera
+                  aria-hidden="true"
+                  className="mt-1 size-5 shrink-0 text-[var(--brand-primary-hover)]"
+                />
+
+                <div>
+                  <h3 className="font-semibold">Include useful photos</h3>
+
+                  <p className="body-copy mt-2 text-sm">
+                    Add a wide image of the vehicle and closer photos of the
+                    affected area.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <ShieldCheck
+                  aria-hidden="true"
+                  className="mt-1 size-5 shrink-0 text-[var(--brand-primary-hover)]"
+                />
+
+                <div>
+                  <h3 className="font-semibold">Be specific</h3>
+
+                  <p className="body-copy mt-2 text-sm">
+                    Explain where the damage is, how it happened and whether the
+                    vehicle is driveable.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <Clock3
+                  aria-hidden="true"
+                  className="mt-1 size-5 shrink-0 text-[var(--brand-primary-hover)]"
+                />
+
+                <div>
+                  <h3 className="font-semibold">Initial assessment</h3>
+
+                  <p className="body-copy mt-2 text-sm">
+                    A website request helps us understand the job, but a
+                    workshop inspection may still be required before a final
+                    price is confirmed.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-10 border-l-2 border-[var(--brand-primary)] pl-5">
+              <p className="text-sm text-white/60">
+                Prefer to speak with the workshop?
+              </p>
+
+              <a
+                href={siteContent.business.phoneHref}
+                className="mt-2 inline-flex items-center gap-2 font-semibold"
+              >
+                <Phone
+                  aria-hidden="true"
+                  className="size-4 text-[var(--brand-primary-hover)]"
+                />
+
+                {siteContent.business.phoneDisplay}
+              </a>
+            </div>
+          </aside>
+
+          <div className="border border-white/10 bg-[var(--page-background-elevated)] p-6 sm:p-9">
+            <QuoteRequestForm />
           </div>
         </Container>
       </section>
