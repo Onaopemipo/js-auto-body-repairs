@@ -45,3 +45,6 @@ next-env.d.ts
 
 # Local development submissions
 .local-data/
+
+# Private original gallery photographs
+.gallery-source/
