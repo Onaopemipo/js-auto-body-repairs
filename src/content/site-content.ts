@@ -1,10 +1,12 @@
+import { contactConfig } from "@/config/contact";
+
 export const siteContent = {
   business: {
-    name: "JS Auto Body Repairs",
-    location: "Redland Bay, Queensland",
+    name: contactConfig.businessName,
+    location: `${contactConfig.address.suburb}, Queensland`,
     address: "816 German Church Road, Redland Bay QLD 4165",
-    phoneDisplay: "0410 466 916",
-    phoneHref: "tel:0410466916",
+    phoneDisplay: contactConfig.phone.display,
+    phoneHref: contactConfig.phone.href,
     hours: {
       weekdays: "Monday – Friday: 8:30am – 4:30pm",
     },
