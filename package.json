@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "validate:foundation": "node scripts/validateFoundation.mjs",
-    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run validate:three && npm run validate:hero-media && npm run validate:content-pages && npm run validate:quote-form && npm run validate:contact && npm run typecheck && npm run lint && npm run build",
+    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run validate:three && npm run validate:hero-media && npm run validate:content-pages && npm run validate:quote-form && npm run validate:contact && npm run validate:gallery && npm run validate:gallery-media && npm run typecheck && npm run lint && npm run build",
     "brand:process": "node scripts/brand/processLogo.mjs",
     "validate:brand-core": "node scripts/validateBrandCore.mjs",
     "validate:navigation": "node scripts/validateNavigation.mjs",
@@ -19,7 +19,11 @@
     "validate:hero-media": "node scripts/validatePhotographicHero.mjs",
     "validate:content-pages": "node scripts/validateContentPages.mjs",
     "validate:quote-form": "node scripts/validateQuoteForm.mjs",
-    "validate:contact": "node scripts/validateContactPage.mjs"
+    "validate:contact": "node scripts/validateContactPage.mjs",
+    "validate:gallery": "node scripts/validateGallery.mjs",
+    "gallery:process": "node scripts/gallery/processGalleryMedia.mjs",
+    "gallery:rebuild": "npm run gallery:process && npx prettier --write src/content/generated/gallery-projects.ts",
+    "validate:gallery-media": "node scripts/validateGalleryMedia.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
