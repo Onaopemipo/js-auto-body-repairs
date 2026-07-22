@@ -29,7 +29,7 @@ export function BeforeAfterSlider({
         src={after.src}
         alt={after.alt}
         fill
-        priority={priority}
+        preload={priority}
         sizes="(max-width: 768px) 100vw, 70vw"
         placeholder={after.blurDataUrl ? "blur" : "empty"}
         blurDataURL={after.blurDataUrl}
@@ -47,7 +47,7 @@ export function BeforeAfterSlider({
             src={before.src}
             alt={before.alt}
             fill
-            priority={priority}
+            preload={priority}
             sizes="(max-width: 768px) 100vw, 70vw"
             placeholder={before.blurDataUrl ? "blur" : "empty"}
             blurDataURL={before.blurDataUrl}

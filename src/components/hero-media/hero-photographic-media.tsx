@@ -60,7 +60,7 @@ export function HeroPhotographicMedia() {
             src={heroMediaConfig.desktop.fallback}
             alt={heroMediaConfig.alt}
             fill
-            priority
+            preload
             sizes="100vw"
             quality={92}
             onError={() => setFailed(true)}

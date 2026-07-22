@@ -62,7 +62,7 @@ export function BrandLogo({
       }
       width={dimensionsForVariant.width}
       height={dimensionsForVariant.height}
-      priority={priority}
+      preload={priority}
       className={cn("h-auto w-full object-contain", className)}
       sizes={
         variant === "header"

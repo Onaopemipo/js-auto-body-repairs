@@ -17,41 +17,38 @@ const requiredFiles = [
 
 const failures = requiredFiles.filter((file) => !fs.existsSync(file));
 
-const layout = fs.readFileSync("src/app/layout.tsx", "utf8");
+function read(file) {
+  return fs.readFileSync(file, "utf8");
+}
 
-const robots = fs.readFileSync("src/app/robots.ts", "utf8");
+const layout = read("src/app/layout.tsx");
 
-const sitemap = fs.readFileSync("src/app/sitemap.ts", "utf8");
+const robots = read("src/app/robots.ts");
 
-const metadataBuilder = fs.readFileSync(
-  "src/lib/seo/build-page-metadata.ts",
-  "utf8",
-);
+const sitemap = read("src/app/sitemap.ts");
 
-const organizationSchema = fs.readFileSync(
-  "src/components/seo/organization-schema.tsx",
-  "utf8",
-);
+const metadataBuilder = read("src/lib/seo/build-page-metadata.ts");
 
-const websiteSchema = fs.readFileSync(
-  "src/components/seo/website-schema.tsx",
-  "utf8",
-);
+const organizationSchema = read("src/components/seo/organization-schema.tsx");
 
-const servicePage = fs.readFileSync("src/app/services/page.tsx", "utf8");
+const websiteSchema = read("src/components/seo/website-schema.tsx");
 
-const contactConfig = fs.readFileSync("src/config/contact.ts", "utf8");
+const servicePage = read("src/app/services/page.tsx");
 
-const seoConfig = fs.readFileSync("src/config/seo.ts", "utf8");
+const contactConfig = read("src/config/contact.ts");
+
+const seoConfig = read("src/config/seo.ts");
 
 const checks = [
   ["global schema mount", layout, "<GlobalSeoSchemas"],
+  ["SEO configuration import", layout, 'from "@/config/seo"'],
   ["metadata base", layout, "metadataBase"],
-  ["Open Graph image", layout, "seoConfig.socialImage"],
-  ["Twitter image", layout, 'card: "summary_large_image"'],
+  ["root Open Graph image", layout, "seoConfig.socialImage"],
+  ["Twitter large image card", layout, 'card: "summary_large_image"'],
   ["API robots exclusion", robots, '"/api/"'],
-  ["sitemap reference", robots, "sitemap.xml"],
-  ["canonical builder", metadataBuilder, "alternates"],
+  ["sitemap declaration", robots, "sitemap.xml"],
+  ["canonical metadata builder", metadataBuilder, "alternates"],
+  ["page Open Graph image", metadataBuilder, "seoConfig.socialImage"],
   [
     "Google preview directives",
     metadataBuilder,
@@ -61,11 +58,11 @@ const checks = [
   ["Organization schema", organizationSchema, '"@type": "Organization"'],
   ["ContactPoint schema", organizationSchema, "ContactPoint"],
   ["service schema mount", servicePage, "<ServicesSchema"],
-  ["visible FAQ", servicePage, "<ServiceFaqSection"],
+  ["visible service FAQ", servicePage, "<ServiceFaqSection"],
   ["FAQ schema mount", servicePage, "<ServiceFaqSchema"],
   ["canonical address", contactConfig, "816 German Church Road"],
   ["canonical telephone", contactConfig, "0410 466 916"],
-  ["social image", seoConfig, "/media/hero/hero-desktop.webp"],
+  ["static social photograph", seoConfig, "/media/hero/hero-desktop.webp"],
 ];
 
 for (const [label, source, needle] of checks) {
@@ -92,7 +89,7 @@ for (const route of requiredSitemapRoutes) {
 
 for (const invalidRoute of ["/privacy", "/terms"]) {
   if (sitemap.includes(invalidRoute)) {
-    failures.push(`Sitemap includes a missing route: ${invalidRoute}`);
+    failures.push(`Sitemap includes missing route: ${invalidRoute}`);
   }
 }
 
@@ -107,10 +104,8 @@ const metadataPages = [
 ];
 
 for (const page of metadataPages) {
-  const source = fs.readFileSync(page, "utf8");
-
-  if (!source.includes("buildPageMetadata")) {
-    failures.push(`Page does not use canonical metadata builder: ${page}`);
+  if (!read(page).includes("buildPageMetadata")) {
+    failures.push(`Page does not use metadata builder: ${page}`);
   }
 }
 
@@ -119,14 +114,12 @@ const breadcrumbPages = metadataPages.filter(
 );
 
 for (const page of breadcrumbPages) {
-  const source = fs.readFileSync(page, "utf8");
-
-  if (!source.includes("<BreadcrumbSchema")) {
+  if (!read(page).includes("<BreadcrumbSchema")) {
     failures.push(`Page does not mount breadcrumb schema: ${page}`);
   }
 }
 
-if (failures.length > 0) {
+if (failures.length) {
   console.error("SEO validation failed.\n");
 
   for (const failure of failures) {

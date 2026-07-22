@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { GlobalSeoSchemas } from "@/components/seo/global-seo-schemas";
+import { WebVitalsReporter } from "@/components/performance/web-vitals-reporter";
 import { Inter, Manrope } from "next/font/google";
 import { FloatingContactActions } from "@/components/layout/floating-contact-actions";
 import { MotionShell } from "@/components/motion/motion-shell";
@@ -90,6 +91,7 @@ export default function RootLayout({
     <html lang={siteConfig.language}>
       <body className={`${inter.variable} ${manrope.variable}`}>
         <GlobalSeoSchemas />
+        <WebVitalsReporter />
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>

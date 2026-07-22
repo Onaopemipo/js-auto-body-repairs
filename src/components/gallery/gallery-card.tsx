@@ -30,7 +30,7 @@ export function GalleryCard({
             }
             alt={project.image.alt}
             fill
-            priority={priority}
+            preload={priority}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             placeholder={project.image.blurDataUrl ? "blur" : "empty"}
             blurDataURL={project.image.blurDataUrl}

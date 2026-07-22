@@ -16,16 +16,14 @@ export function buildPageMetadata({
   path,
   index = true,
 }: BuildPageMetadataOptions): Metadata {
-  const canonicalPath = path === "/" ? "/" : path;
-
-  const absoluteUrl = new URL(canonicalPath, siteConfig.url).toString();
+  const absoluteUrl = new URL(path, siteConfig.url).toString();
 
   return {
     title,
     description,
 
     alternates: {
-      canonical: canonicalPath,
+      canonical: path,
     },
 
     robots: {

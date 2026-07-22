@@ -116,7 +116,7 @@ export function GalleryLightbox({
                       src={project.image.src}
                       alt={project.image.alt}
                       fill
-                      priority
+                      preload
                       sizes="(max-width: 1024px) 100vw, 70vw"
                       placeholder={project.image.blurDataUrl ? "blur" : "empty"}
                       blurDataURL={project.image.blurDataUrl}
