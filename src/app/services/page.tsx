@@ -1,20 +1,35 @@
-import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
+import { ServicesSchema } from "@/components/seo/services-schema";
+import { ServiceFaqSection } from "@/components/seo/service-faq-section";
+import { ServiceFaqSchema } from "@/components/seo/service-faq-schema";
+import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 
 import { PageCta } from "@/components/pages/page-cta";
 import { PageHero } from "@/components/pages/page-hero";
 import { Container } from "@/components/ui/container";
 import { siteContent } from "@/content/site-content";
+import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 
-export const metadata: Metadata = {
-  title: "Services",
+export const metadata = buildPageMetadata({
+  title: "Auto Body Repair Services",
   description:
     "Collision repairs, paint refinishing, dent removal, maintenance, complex repairs, performance upgrades and AC regas in Redland Bay.",
-};
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Services", path: "/services" },
+        ]}
+      />
+
+      <ServicesSchema />
+      <ServiceFaqSchema />
+
       <PageHero
         eyebrow="Services"
         title="Complete repair and refinishing support for your vehicle."
@@ -52,6 +67,8 @@ export default function ServicesPage() {
           </div>
         </Container>
       </section>
+      <ServiceFaqSection />
+
       <PageCta
         title="Not sure which service you need?"
         description="Get in touch and we will help you understand the most appropriate next step."

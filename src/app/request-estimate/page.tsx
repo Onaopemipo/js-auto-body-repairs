@@ -1,20 +1,29 @@
-import type { Metadata } from "next";
 import { Camera, Clock3, Phone, ShieldCheck } from "lucide-react";
+import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 
 import { QuoteRequestForm } from "@/components/forms/quote-request-form";
 import { PageHero } from "@/components/pages/page-hero";
 import { Container } from "@/components/ui/container";
 import { siteContent } from "@/content/site-content";
+import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 
-export const metadata: Metadata = {
-  title: "Request a Free Quote",
+export const metadata = buildPageMetadata({
+  title: "Request a Free Repair Quote",
   description:
-    "Request a free vehicle repair quote from JS Auto Body Repairs in Redland Bay.",
-};
+    "Request a free vehicle repair quote from JS Auto Body Repairs in Redland Bay and upload photos of the required work.",
+  path: "/request-estimate",
+});
 
 export default function RequestEstimatePage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Request a Free Quote", path: "/request-estimate" },
+        ]}
+      />
+
       <PageHero
         eyebrow="Free quote"
         title={siteContent.quote.title}

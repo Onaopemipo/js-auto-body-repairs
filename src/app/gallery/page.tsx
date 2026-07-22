@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import { Suspense } from "react";
+import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 
 import { GalleryExperience } from "@/components/gallery/gallery-experience";
 import { GalleryImageSchema } from "@/components/gallery/gallery-image-schema";
@@ -8,19 +8,25 @@ import { PageHero } from "@/components/pages/page-hero";
 import { Container } from "@/components/ui/container";
 import { galleryProjects } from "@/content/gallery";
 import { siteContent } from "@/content/site-content";
+import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 
-export const metadata: Metadata = {
-  title: "Gallery",
+export const metadata = buildPageMetadata({
+  title: "Repair Gallery",
   description:
-    "View collision repair, paint refinishing and dent removal work completed by JS Auto Body Repairs in Redland Bay.",
-  alternates: {
-    canonical: "/gallery",
-  },
-};
+    "View authentic collision repair, paint refinishing and dent removal projects completed by JS Auto Body Repairs in Redland Bay.",
+  path: "/gallery",
+});
 
 export default function GalleryPage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Gallery", path: "/gallery" },
+        ]}
+      />
+
       <GalleryImageSchema projects={galleryProjects} />
 
       <PageHero

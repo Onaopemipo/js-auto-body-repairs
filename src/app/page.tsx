@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 import { FinalCta } from "@/components/home/final-cta";
 import { GalleryPreview } from "@/components/home/gallery-preview";
 import { HomeHero } from "@/components/home/home-hero";
@@ -11,22 +9,14 @@ import { TestimonialsPreview } from "@/components/home/testimonials-preview";
 import { TrustStrip } from "@/components/home/trust-strip";
 import { WhyChooseUs } from "@/components/home/why-choose-us";
 import { Reveal } from "@/components/motion/reveal";
-import { siteConfig } from "@/config/site";
+import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Collision Repair and Auto Body Restoration",
   description:
-    "Professional collision repair, panel restoration, paint refinishing and accident damage assessment from JS Auto Body Repairs.",
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "JS Auto Body Repairs",
-    description:
-      "Professional collision repair, panel restoration and paint refinishing.",
-    url: siteConfig.url,
-  },
-};
+    "Professional collision repair, panel restoration, paint refinishing and accident damage assessment from JS Auto Body Repairs in Redland Bay.",
+  path: "/",
+});
 
 export default function HomePage() {
   return (

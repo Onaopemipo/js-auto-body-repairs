@@ -1,20 +1,29 @@
-import type { Metadata } from "next";
 import { Quote } from "lucide-react";
+import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 
 import { PageCta } from "@/components/pages/page-cta";
 import { PageHero } from "@/components/pages/page-hero";
 import { Container } from "@/components/ui/container";
 import { siteContent } from "@/content/site-content";
+import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Customer Reviews",
   description:
-    "Read customer experiences and Google reviews for JS Auto Body Repairs in Redland Bay.",
-};
+    "Read customer experiences and reviews for JS Auto Body Repairs in Redland Bay.",
+  path: "/testimonials",
+});
 
 export default function TestimonialsPage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Reviews", path: "/testimonials" },
+        ]}
+      />
+
       <PageHero
         eyebrow="Customer reviews"
         title="What our customers say"

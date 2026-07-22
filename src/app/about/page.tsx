@@ -1,19 +1,27 @@
-import type { Metadata } from "next";
-
 import { PageCta } from "@/components/pages/page-cta";
+import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import { PageHero } from "@/components/pages/page-hero";
 import { Container } from "@/components/ui/container";
 import { siteContent } from "@/content/site-content";
+import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "About Us",
   description:
     "Learn about JS Auto Body Repairs, a locally owned Redland Bay panel beating and auto refinishing workshop.",
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ]}
+      />
+
       <PageHero
         eyebrow="About JS Auto Body Repairs"
         title={siteContent.about.heroTitle}

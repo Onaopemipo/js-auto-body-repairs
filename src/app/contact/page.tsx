@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import { Clock3, MapPin, Phone } from "lucide-react";
+import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 
 import { BusinessHours } from "@/components/contact/business-hours";
 import { ContactActions } from "@/components/contact/contact-actions";
@@ -8,25 +8,26 @@ import { LocalBusinessSchema } from "@/components/contact/local-business-schema"
 import { PageHero } from "@/components/pages/page-hero";
 import { Container } from "@/components/ui/container";
 import { contactConfig } from "@/config/contact";
-import { siteConfig } from "@/config/site";
 import { siteContent } from "@/content/site-content";
+import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: `Contact ${contactConfig.businessName} at ${contactConfig.address.formatted}. Call ${contactConfig.phone.display} for panel beating, collision repair and auto refinishing enquiries.`,
-  alternates: {
-    canonical: "/contact",
-  },
-  openGraph: {
-    title: `Contact ${contactConfig.businessName}`,
-    description: `Visit the Redland Bay workshop at ${contactConfig.address.formatted}.`,
-    url: `${siteConfig.url}/contact`,
-  },
-};
+export const metadata = buildPageMetadata({
+  title: "Contact JS Auto Body Repairs",
+  description:
+    "Contact JS Auto Body Repairs at 816 German Church Road, Redland Bay QLD 4165, or call 0410 466 916.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ]}
+      />
+
       <LocalBusinessSchema />
 
       <PageHero
