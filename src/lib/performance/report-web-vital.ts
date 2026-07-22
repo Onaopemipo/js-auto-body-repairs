@@ -1,4 +1,5 @@
 import type { useReportWebVitals } from "next/web-vitals";
+import { trackAnalyticsEvent } from "@/lib/analytics/events";
 
 type ReportWebVitalsCallback = Parameters<typeof useReportWebVitals>[0];
 
@@ -21,6 +22,16 @@ export const reportWebVital: ReportWebVitalsCallback = (
       navigationType: metric.navigationType,
     });
   }
+
+  trackAnalyticsEvent("web_vital", {
+    metric_name: metric.name,
+    metric_value: Math.round(
+      metric.name === "CLS" ? metric.value * 1000 : metric.value,
+    ),
+    metric_rating: metric.rating,
+    metric_id: metric.id,
+    navigation_type: metric.navigationType,
+  });
 
   const endpoint = process.env.NEXT_PUBLIC_WEB_VITALS_ENDPOINT;
 

@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "validate:foundation": "node scripts/validateFoundation.mjs",
-    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run validate:three && npm run validate:hero-media && npm run validate:content-pages && npm run validate:quote-form && npm run validate:contact && npm run validate:gallery && npm run validate:gallery-media && npm run validate:seo && npm run validate:performance && npm run typecheck && npm run lint && npm run build",
+    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run validate:three && npm run validate:hero-media && npm run validate:content-pages && npm run validate:quote-form && npm run validate:contact && npm run validate:gallery && npm run validate:gallery-media && npm run validate:seo && npm run validate:performance && npm run validate:production && npm run validate:analytics && npm run typecheck && npm run lint && npm run build",
     "brand:process": "node scripts/brand/processLogo.mjs",
     "validate:brand-core": "node scripts/validateBrandCore.mjs",
     "validate:navigation": "node scripts/validateNavigation.mjs",
@@ -25,7 +25,9 @@
     "gallery:rebuild": "npm run gallery:process && npx prettier --write src/content/generated/gallery-projects.ts",
     "validate:gallery-media": "node scripts/validateGalleryMedia.mjs",
     "validate:seo": "node scripts/validateSeo.mjs",
-    "validate:performance": "node scripts/validatePerformance.mjs"
+    "validate:performance": "node scripts/validatePerformance.mjs",
+    "validate:production": "node scripts/validateProductionReadiness.mjs",
+    "validate:analytics": "node scripts/validateAnalytics.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

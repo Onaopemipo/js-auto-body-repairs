@@ -79,17 +79,14 @@ const requiredSitemapRoutes = [
   'path: "/testimonials"',
   'path: "/contact"',
   'path: "/request-estimate"',
+  'path: "/privacy"',
+  'path: "/terms"',
+  'path: "/cookies"',
 ];
 
 for (const route of requiredSitemapRoutes) {
   if (!sitemap.includes(route)) {
     failures.push(`Missing sitemap route: ${route}`);
-  }
-}
-
-for (const invalidRoute of ["/privacy", "/terms"]) {
-  if (sitemap.includes(invalidRoute)) {
-    failures.push(`Sitemap includes missing route: ${invalidRoute}`);
   }
 }
 
@@ -101,6 +98,9 @@ const metadataPages = [
   "src/app/testimonials/page.tsx",
   "src/app/contact/page.tsx",
   "src/app/request-estimate/page.tsx",
+  "src/app/privacy/page.tsx",
+  "src/app/terms/page.tsx",
+  "src/app/cookies/page.tsx",
 ];
 
 for (const page of metadataPages) {

@@ -8,7 +8,7 @@ import { DesktopNavigation } from "@/components/navigation/desktop-navigation";
 import { MobileNavigation } from "@/components/navigation/mobile-navigation";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
-import { siteConfig } from "@/config/site";
+import { contactConfig } from "@/config/contact";
 import { cn } from "@/lib/cn";
 
 export function SiteHeader() {
@@ -92,28 +92,32 @@ export function SiteHeader() {
         <DesktopNavigation />
 
         <div className="flex items-center gap-3">
-          {siteConfig.phone ? (
-            <a
-              href={`tel:${siteConfig.phone.replace(/\s+/g, "")}`}
-              aria-label="Call JS Auto Body Repairs"
-              className={[
-                "hidden size-11 items-center",
-                "justify-center rounded-full",
-                "border border-white/15",
-                "bg-black/25 text-white/70",
-                "backdrop-blur-md",
-                "transition duration-300",
-                "hover:border-[var(--brand-primary)]",
-                "hover:text-white lg:inline-flex xl:hidden",
-              ].join(" ")}
-            >
-              <Phone aria-hidden="true" className="size-4" />
-            </a>
-          ) : null}
+          <a
+            href={contactConfig.phone.href}
+            aria-label="Call JS Auto Body Repairs"
+            data-analytics-event="phone_click"
+            data-analytics-label="header_phone"
+            data-analytics-location="site_header"
+            className={[
+              "hidden size-11 items-center",
+              "justify-center rounded-full",
+              "border border-white/15",
+              "bg-black/25 text-white/70",
+              "backdrop-blur-md",
+              "transition duration-300",
+              "hover:border-[var(--brand-primary)]",
+              "hover:text-white lg:inline-flex xl:hidden",
+            ].join(" ")}
+          >
+            <Phone aria-hidden="true" className="size-4" />
+          </a>
 
           <ButtonLink
             href="/request-estimate"
             className="group hidden xl:inline-flex"
+            data-analytics-event="quote_cta_click"
+            data-analytics-label="header_request_estimate"
+            data-analytics-location="site_header"
           >
             Request estimate
             <ArrowUpRight

@@ -9,6 +9,7 @@ import {
   X,
 } from "lucide-react";
 import Script from "next/script";
+import { trackAnalyticsEvent, trackGenerateLead } from "@/lib/analytics/events";
 import { useRef, useState, type ChangeEvent, type FormEvent } from "react";
 
 interface SubmissionResponse {
@@ -27,6 +28,8 @@ const maximumFileBytes = 8 * 1024 * 1024;
 const maximumTotalBytes = 20 * 1024 * 1024;
 
 export function QuoteRequestForm() {
+  const formStartedReference = useRef(false);
+
   const formReference = useRef<HTMLFormElement>(null);
 
   const [startedAt] = useState(() => Date.now());
@@ -132,6 +135,10 @@ export function QuoteRequestForm() {
     const form = event.currentTarget;
 
     if (!form.reportValidity()) {
+      trackAnalyticsEvent("quote_form_validation_error", {
+        form_name: "vehicle_quote_request",
+      });
+
       return;
     }
 
@@ -162,6 +169,12 @@ export function QuoteRequestForm() {
       setResult(responseBody);
 
       if (response.ok && responseBody.ok) {
+        trackGenerateLead({
+          service: String(formData.get("service") ?? ""),
+          preferredContact: String(formData.get("preferredContact") ?? ""),
+          hasPhotos: photos.length > 0,
+        });
+
         formReference.current?.reset();
 
         for (const photo of photos) {
@@ -193,6 +206,17 @@ export function QuoteRequestForm() {
       <form
         ref={formReference}
         onSubmit={handleSubmit}
+        onFocusCapture={() => {
+          if (formStartedReference.current) {
+            return;
+          }
+
+          formStartedReference.current = true;
+
+          trackAnalyticsEvent("quote_form_start", {
+            form_name: "vehicle_quote_request",
+          });
+        }}
         encType="multipart/form-data"
         className="space-y-10"
       >

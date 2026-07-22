@@ -20,14 +20,14 @@ export function GalleryCard({
         type="button"
         onClick={() => onOpen(project)}
         aria-label={`View ${project.title}`}
+        data-analytics-event="gallery_project_open"
+        data-analytics-label={project.slug}
+        data-analytics-location="gallery_grid"
         className="block w-full text-left"
       >
         <div className="relative aspect-[4/3] overflow-hidden bg-black">
           <Image
-            src={
-              project.image.thumbnailSrc ||
-              project.image.src
-            }
+            src={project.image.thumbnailSrc || project.image.src}
             alt={project.image.alt}
             fill
             preload={priority}

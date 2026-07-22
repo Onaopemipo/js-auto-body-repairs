@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { AnalyticsConsentBanner } from "@/components/analytics/analytics-consent-banner";
+import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
 import { GlobalSeoSchemas } from "@/components/seo/global-seo-schemas";
 import { WebVitalsReporter } from "@/components/performance/web-vitals-reporter";
 import { Inter, Manrope } from "next/font/google";
@@ -90,6 +92,7 @@ export default function RootLayout({
   return (
     <html lang={siteConfig.language}>
       <body className={`${inter.variable} ${manrope.variable}`}>
+        <AnalyticsProvider />
         <GlobalSeoSchemas />
         <WebVitalsReporter />
         <a href="#main-content" className="skip-link">
@@ -102,6 +105,7 @@ export default function RootLayout({
           </main>
           <SiteFooter />
           <FloatingContactActions />
+          <AnalyticsConsentBanner />
         </MotionShell>
       </body>
     </html>

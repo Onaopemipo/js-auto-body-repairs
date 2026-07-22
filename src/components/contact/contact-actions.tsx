@@ -7,7 +7,13 @@ import { contactConfig } from "@/config/contact";
 export function ContactActions() {
   return (
     <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-      <ButtonLink href="/request-estimate" className="group">
+      <ButtonLink
+        href="/request-estimate"
+        className="group"
+        data-analytics-event="quote_cta_click"
+        data-analytics-label="contact_page_request_quote"
+        data-analytics-location="contact_page"
+      >
         Request quote
         <ArrowUpRight
           aria-hidden="true"
@@ -17,6 +23,9 @@ export function ContactActions() {
 
       <a
         href={contactConfig.phone.href}
+        data-analytics-event="phone_click"
+        data-analytics-label="contact_page_phone"
+        data-analytics-location="contact_page"
         className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/20 bg-white/[0.03] px-5 text-xs font-bold uppercase tracking-[0.075em] text-white transition hover:border-white/45 hover:bg-white/[0.06]"
       >
         <Phone aria-hidden="true" className="size-4" />
@@ -25,6 +34,9 @@ export function ContactActions() {
 
       <a
         href={contactConfig.maps.directionsUrl}
+        data-analytics-event="directions_click"
+        data-analytics-label="contact_page_directions"
+        data-analytics-location="contact_page"
         target="_blank"
         rel="noreferrer"
         className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/20 bg-white/[0.03] px-5 text-xs font-bold uppercase tracking-[0.075em] text-white transition hover:border-white/45 hover:bg-white/[0.06]"

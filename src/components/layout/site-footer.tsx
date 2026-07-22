@@ -1,9 +1,26 @@
 import Link from "next/link";
 
+import { ManageAnalyticsPreferences } from "@/components/analytics/manage-analytics-preferences";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
+import { contactConfig } from "@/config/contact";
 import { siteConfig } from "@/config/site";
+
+const legalLinks = [
+  {
+    label: "Privacy",
+    href: "/privacy",
+  },
+  {
+    label: "Terms",
+    href: "/terms",
+  },
+  {
+    label: "Cookies",
+    href: "/cookies",
+  },
+] as const;
 
 export function SiteFooter() {
   return (
@@ -55,17 +72,16 @@ export function SiteFooter() {
         <div>
           <p className="eyebrow">Contact</p>
 
-          <div className="mt-6 space-y-4 text-sm text-[var(--text-secondary)]">
-            {siteConfig.phone ? (
-              <a
-                href={`tel:${siteConfig.phone.replace(/\s+/g, "")}`}
-                className="block transition hover:text-white"
-              >
-                {siteConfig.phone}
-              </a>
-            ) : (
-              <p>Phone details pending</p>
-            )}
+          <address className="mt-6 space-y-4 text-sm not-italic text-[var(--text-secondary)]">
+            <a
+              href={contactConfig.phone.href}
+              data-analytics-event="phone_click"
+              data-analytics-label="footer_phone"
+              data-analytics-location="site_footer"
+              className="block transition hover:text-white"
+            >
+              {contactConfig.phone.display}
+            </a>
 
             <a
               href={`mailto:${siteConfig.email}`}
@@ -74,12 +90,8 @@ export function SiteFooter() {
               {siteConfig.email}
             </a>
 
-            {siteConfig.address ? (
-              <p>{siteConfig.address}</p>
-            ) : (
-              <p>Workshop location pending</p>
-            )}
-          </div>
+            <p>{contactConfig.address.formatted}</p>
+          </address>
         </div>
       </Container>
 
@@ -89,15 +101,18 @@ export function SiteFooter() {
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
 
-          <div className="flex gap-5">
-            <Link href="/privacy" className="transition hover:text-white">
-              Privacy
-            </Link>
-
-            <Link href="/terms" className="transition hover:text-white">
-              Terms
-            </Link>
-          </div>
+          <nav aria-label="Legal" className="flex flex-wrap gap-x-5 gap-y-2">
+            {legalLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="transition hover:text-white"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <ManageAnalyticsPreferences />
+          </nav>
         </Container>
       </div>
     </footer>
