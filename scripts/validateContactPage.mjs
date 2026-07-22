@@ -46,27 +46,52 @@ const floatingActions = fs.readFileSync(
 );
 
 const checks = [
-  ["canonical address", contactConfig, "816 German Church Road"],
-  ["canonical phone", contactConfig, "0410 466 916"],
-  ["Brisbane timezone", contactConfig, "Australia/Brisbane"],
-  ["Google Maps embed", contactConfig, "output=embed"],
-  ["directions URL", contactConfig, "/maps/dir/?api=1"],
-  ["contact map iframe", contactMap, "<iframe"],
-  ["lazy map loading", contactMap, 'loading="lazy"'],
-  ["map fallback link", contactMap, "Open in Google Maps"],
-  ["click-to-call", contactActions, "contactConfig.phone.href"],
-  ["copy address", contactActions, "<CopyAddress"],
-  ["business hours", businessHours, "contactConfig.hours"],
-  ["AutoBodyShop schema", schema, '"@type": "AutoBodyShop"'],
-  ["structured address", schema, "PostalAddress"],
-  ["contact page schema mount", contactPage, "<LocalBusinessSchema"],
-  ["contact page map mount", contactPage, "<ContactMap"],
-  ["canonical site content", siteContent, "contactConfig.address.formatted"],
-  ["canonical floating phone", floatingActions, "contactConfig.phone.href"],
+  ["canonical address", contactConfig, /816 German Church Road/],
+  ["canonical suburb", contactConfig, /Redland Bay/],
+  ["canonical postcode", contactConfig, /4165/],
+  ["canonical phone", contactConfig, /0410 466 916/],
+  ["canonical telephone link", contactConfig, /tel:0410466916/],
+  ["Brisbane timezone", contactConfig, /Australia\/Brisbane/],
+  ["Google Maps embed", contactConfig, /output=embed/],
+  ["directions URL", contactConfig, /maps\/dir\/\?api=1/],
+  ["contact map iframe", contactMap, /<iframe/],
+  ["lazy map loading", contactMap, /loading="lazy"/],
+  ["map loading fallback", contactMap, /Loading workshop map/],
+  ["Google Maps fallback link", contactMap, /Open in Google Maps/],
+  ["click-to-call action", contactActions, /contactConfig\.phone\s*\.\s*href/],
+  [
+    "directions action",
+    contactActions,
+    /contactConfig\.maps\s*\.\s*directionsUrl/,
+  ],
+  ["copy address action", contactActions, /<CopyAddress/],
+  ["business hours", businessHours, /contactConfig\.hours/],
+  ["AutoBodyShop schema", schema, /"@type":\s*"AutoBodyShop"/],
+  ["structured postal address", schema, /PostalAddress/],
+  ["opening hours schema", schema, /OpeningHoursSpecification/],
+  ["contact page schema mount", contactPage, /<LocalBusinessSchema/],
+  ["contact page map mount", contactPage, /<ContactMap/],
+  ["contact page hours mount", contactPage, /<BusinessHours/],
+  ["contact page actions mount", contactPage, /<ContactActions/],
+  [
+    "canonical site-content address",
+    siteContent,
+    /contactConfig\.address\s*\.\s*formatted/,
+  ],
+  [
+    "canonical site-content phone",
+    siteContent,
+    /contactConfig\.phone\s*\.\s*display/,
+  ],
+  [
+    "canonical floating phone",
+    floatingActions,
+    /contactConfig\.phone\s*\.\s*href/,
+  ],
 ];
 
-for (const [label, source, value] of checks) {
-  if (!source.includes(value)) {
+for (const [label, source, matcher] of checks) {
+  if (!matcher.test(source)) {
     failures.push(`Missing contact requirement: ${label}`);
   }
 }

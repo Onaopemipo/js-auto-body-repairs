@@ -4,7 +4,7 @@ export const siteContent = {
   business: {
     name: contactConfig.businessName,
     location: `${contactConfig.address.suburb}, Queensland`,
-    address: "816 German Church Road, Redland Bay QLD 4165",
+    address: contactConfig.address.formatted,
     phoneDisplay: contactConfig.phone.display,
     phoneHref: contactConfig.phone.href,
     hours: {
