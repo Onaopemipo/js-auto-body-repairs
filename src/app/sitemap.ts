@@ -38,6 +38,21 @@ const routes = [
     changeFrequency: "monthly" as const,
     priority: 0.9,
   },
+  {
+    path: "/privacy",
+    changeFrequency: "yearly" as const,
+    priority: 0.3,
+  },
+  {
+    path: "/terms",
+    changeFrequency: "yearly" as const,
+    priority: 0.3,
+  },
+  {
+    path: "/cookies",
+    changeFrequency: "yearly" as const,
+    priority: 0.3,
+  },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
