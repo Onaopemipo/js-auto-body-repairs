@@ -32,7 +32,8 @@
     "deploy:package": "npm run validate && node scripts/deployment/buildPackage.mjs && npm run deploy:inspect",
     "deploy:inspect": "node scripts/deployment/inspectPackage.mjs",
     "deploy:verify-env": "node scripts/deployment/verifyEnvironment.mjs",
-    "deploy:smoke": "node scripts/deployment/smokeTest.mjs"
+    "deploy:smoke": "node scripts/deployment/smokeTest.mjs",
+    "cpanel:build": "node scripts/deployment/cpanelBuild.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

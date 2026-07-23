@@ -53,3 +53,6 @@ next-env.d.ts
 .deployment/
 *.zip
 *.sha256
+
+# cPanel build diagnostics
+cpanel-build.log
