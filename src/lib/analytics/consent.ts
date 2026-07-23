@@ -24,18 +24,49 @@ export function readAnalyticsConsent(): AnalyticsConsent {
 
     const stored = JSON.parse(rawValue) as Partial<StoredAnalyticsConsent>;
 
-    if (stored.version !== analyticsConfig.consentVersion) {
+    if (
+      stored.version !== analyticsConfig.consentVersion ||
+      (stored.status !== "granted" && stored.status !== "denied")
+    ) {
       return "unknown";
     }
 
-    if (stored.status === "granted" || stored.status === "denied") {
-      return stored.status;
-    }
-
-    return "unknown";
+    return stored.status;
   } catch {
     return "unknown";
   }
+}
+
+export function subscribeAnalyticsConsent(callback: () => void) {
+  if (!isBrowser()) {
+    return () => {};
+  }
+
+  function handleConsentChange() {
+    callback();
+  }
+
+  function handleStorage(event: StorageEvent) {
+    if (event.key === analyticsConfig.consentStorageKey) {
+      callback();
+    }
+  }
+
+  window.addEventListener(
+    analyticsConfig.consentChangedEvent,
+    handleConsentChange,
+  );
+
+  window.addEventListener("storage", handleStorage);
+
+  return () => {
+    window.removeEventListener(
+      analyticsConfig.consentChangedEvent,
+      handleConsentChange,
+    );
+
+    window.removeEventListener("storage", handleStorage);
+  };
 }
 
 export function saveAnalyticsConsent(

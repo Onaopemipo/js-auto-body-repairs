@@ -6,45 +6,41 @@ import { useEffect, useState } from "react";
 
 import { analyticsConfig } from "@/config/analytics";
 import {
-  readAnalyticsConsent,
+  openAnalyticsPreferences,
   saveAnalyticsConsent,
 } from "@/lib/analytics/consent";
+import { useAnalyticsConsent } from "@/lib/analytics/use-analytics-consent";
 import type { AnalyticsConsent } from "@/types/analytics";
 
 export function AnalyticsConsentBanner() {
-  const [visible, setVisible] = useState(() =>
-    readAnalyticsConsent() === "unknown",
-  );
+  const consent = useAnalyticsConsent();
+
+  const [preferencesOpen, setPreferencesOpen] = useState(false);
 
   const [managing, setManaging] = useState(false);
 
-  const [analyticsEnabled, setAnalyticsEnabled] = useState(() =>
-    readAnalyticsConsent() === "granted",
-  );
+  const [analyticsEnabled, setAnalyticsEnabled] = useState(false);
 
   useEffect(() => {
-
-    function openPreferences() {
-      const current = readAnalyticsConsent();
-
-      setAnalyticsEnabled(current === "granted");
+    function handleOpenPreferences() {
+      setAnalyticsEnabled(consent === "granted");
 
       setManaging(true);
-      setVisible(true);
+      setPreferencesOpen(true);
     }
 
     window.addEventListener(
       analyticsConfig.manageConsentEvent,
-      openPreferences,
+      handleOpenPreferences,
     );
 
     return () => {
       window.removeEventListener(
         analyticsConfig.manageConsentEvent,
-        openPreferences,
+        handleOpenPreferences,
       );
     };
-  }, []);
+  }, [consent]);
 
   function chooseConsent(status: Exclude<AnalyticsConsent, "unknown">) {
     saveAnalyticsConsent(status);
@@ -52,8 +48,10 @@ export function AnalyticsConsentBanner() {
     setAnalyticsEnabled(status === "granted");
 
     setManaging(false);
-    setVisible(false);
+    setPreferencesOpen(false);
   }
+
+  const visible = consent === "unknown" || preferencesOpen;
 
   if (!visible) {
     return null;
@@ -115,7 +113,7 @@ export function AnalyticsConsentBanner() {
             type="button"
             aria-label="Close privacy preferences"
             onClick={() => {
-              setVisible(false);
+              setPreferencesOpen(false);
               setManaging(false);
             }}
             className="grid size-10 shrink-0 place-items-center rounded-full border border-white/10 text-white/60 transition hover:border-white/30 hover:text-white"
@@ -200,7 +198,7 @@ export function AnalyticsConsentBanner() {
 
           <button
             type="button"
-            onClick={() => setManaging(true)}
+            onClick={openAnalyticsPreferences}
             className="inline-flex min-h-12 items-center justify-center px-5 text-xs font-bold uppercase tracking-[0.075em] text-white/65 transition hover:text-white"
           >
             Manage preferences
