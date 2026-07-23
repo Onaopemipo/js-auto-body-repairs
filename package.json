@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "validate:foundation": "node scripts/validateFoundation.mjs",
-    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run validate:three && npm run validate:hero-media && npm run validate:content-pages && npm run validate:quote-form && npm run validate:contact && npm run validate:gallery && npm run validate:gallery-media && npm run validate:seo && npm run validate:performance && npm run validate:production && npm run validate:analytics && npm run typecheck && npm run lint && npm run build",
+    "validate": "npm run validate:foundation && npm run validate:brand-core && npm run validate:navigation && npm run validate:homepage && npm run validate:motion && npm run validate:three && npm run validate:hero-media && npm run validate:content-pages && npm run validate:quote-form && npm run validate:contact && npm run validate:gallery && npm run validate:gallery-media && npm run validate:seo && npm run validate:performance && npm run validate:production && npm run validate:analytics && npm run validate:namecheap && npm run typecheck && npm run lint && npm run build",
     "brand:process": "node scripts/brand/processLogo.mjs",
     "validate:brand-core": "node scripts/validateBrandCore.mjs",
     "validate:navigation": "node scripts/validateNavigation.mjs",
@@ -27,7 +27,12 @@
     "validate:seo": "node scripts/validateSeo.mjs",
     "validate:performance": "node scripts/validatePerformance.mjs",
     "validate:production": "node scripts/validateProductionReadiness.mjs",
-    "validate:analytics": "node scripts/validateAnalytics.mjs"
+    "validate:analytics": "node scripts/validateAnalytics.mjs",
+    "validate:namecheap": "node scripts/validateNamecheapDeployment.mjs",
+    "deploy:package": "npm run validate && node scripts/deployment/buildPackage.mjs && npm run deploy:inspect",
+    "deploy:inspect": "node scripts/deployment/inspectPackage.mjs",
+    "deploy:verify-env": "node scripts/deployment/verifyEnvironment.mjs",
+    "deploy:smoke": "node scripts/deployment/smokeTest.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -64,7 +69,7 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=20.9.0",
+    "node": ">=22.0.0 <23",
     "npm": ">=10.0.0"
   }
 }

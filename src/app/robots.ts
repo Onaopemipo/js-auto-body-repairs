@@ -3,14 +3,23 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
 
 export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: [
-      {
+  const indexable = process.env.NEXT_PUBLIC_SITE_INDEXABLE === "true";
+
+  if (!indexable) {
+    return {
+      rules: {
         userAgent: "*",
-        allow: "/",
-        disallow: ["/api/", "/_next/"],
+        disallow: "/",
       },
-    ],
+    };
+  }
+
+  return {
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/api/", "/_next/"],
+    },
 
     sitemap: `${siteConfig.url}/sitemap.xml`,
 

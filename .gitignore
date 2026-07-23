@@ -48,3 +48,8 @@ next-env.d.ts
 
 # Private original gallery photographs
 .gallery-source/
+
+# Namecheap deployment packages
+.deployment/
+*.zip
+*.sha256
