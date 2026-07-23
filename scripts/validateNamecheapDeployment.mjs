@@ -40,7 +40,11 @@ const checks = [
   ["preview noindex header", nextConfig, "X-Robots-Tag"],
   ["preview robots protection", robots, 'disallow: "/"'],
   ["health response", health, "ok: true"],
-  ["preview URL", envExample, "https://preview.jsautobodyrepairs.com.au"],
+  [
+    "preview URL",
+    envExample,
+    "https://delightful-fuchsia-horse.jsautobodyrepairs.com.au",
+  ],
   ["indexability variable", envExample, "NEXT_PUBLIC_SITE_INDEXABLE=false"],
   ["Turnstile secret", envExample, "TURNSTILE_SECRET_KEY="],
   ["SMTP password", envExample, "SMTP_PASSWORD="],
