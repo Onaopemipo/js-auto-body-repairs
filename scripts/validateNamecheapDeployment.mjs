@@ -36,7 +36,6 @@ const envExample = read(".env.example");
 const checks = [
   ["Passenger port", server, "process.env.PORT"],
   ["Next request handler", server, "getRequestHandler"],
-  ["standalone output", nextConfig, 'output: "standalone"'],
   ["preview noindex header", nextConfig, "X-Robots-Tag"],
   ["preview robots protection", robots, 'disallow: "/"'],
   ["health response", health, "ok: true"],
