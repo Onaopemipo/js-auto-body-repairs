@@ -469,6 +469,7 @@ export function QuoteRequestForm() {
           <div
             className="cf-turnstile"
             data-sitekey={turnstileSiteKey}
+            data-action="turnstile-spin-v2"
             data-theme="dark"
           />
         ) : (

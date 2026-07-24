@@ -39,13 +39,9 @@ const checks = [
   ["preview noindex header", nextConfig, "X-Robots-Tag"],
   ["preview robots protection", robots, 'disallow: "/"'],
   ["health response", health, "ok: true"],
-  [
-    "preview URL",
-    envExample,
-    "https://delightful-fuchsia-horse.jsautobodyrepairs.com.au",
-  ],
-  ["indexability variable", envExample, "NEXT_PUBLIC_SITE_INDEXABLE=false"],
-  ["Turnstile secret", envExample, "TURNSTILE_SECRET_KEY="],
+  ["preview URL", envExample, "https://jsautobodyrepairs.com.au"],
+  ["indexability variable", envExample, "NEXT_PUBLIC_SITE_INDEXABLE=true"],
+  ["Turnstile secret", envExample, "TURNSTILE_SECRET="],
   ["SMTP password", envExample, "SMTP_PASSWORD="],
 ];
 

@@ -16,7 +16,7 @@ export function isSmtpConfigured() {
 }
 
 export function isTurnstileConfigured() {
-  return Boolean(process.env.TURNSTILE_SECRET_KEY?.trim());
+  return Boolean(process.env.TURNSTILE_SECRET?.trim());
 }
 
 export function getMissingSmtpVariables() {

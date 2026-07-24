@@ -88,6 +88,8 @@ run("docker", [
   "--rm",
   "--platform",
   "linux/amd64",
+  "--env-file",
+  path.join(root, ".env.production.local"),
   "--volume",
   `${root}:/workspace`,
   "--workdir",

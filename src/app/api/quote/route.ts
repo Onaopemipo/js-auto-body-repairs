@@ -66,6 +66,19 @@ function checkRateLimit(key: string) {
   };
 }
 
+function normaliseHost(value: string) {
+  return value.trim().toLowerCase().replace(/\.$/, "");
+}
+
+function getForwardedHost(request: Request) {
+  const forwardedHost = request.headers
+    .get("x-forwarded-host")
+    ?.split(",")[0]
+    ?.trim();
+
+  return forwardedHost || request.headers.get("host")?.trim() || "";
+}
+
 function hasValidOrigin(request: Request) {
   const origin = request.headers.get("origin");
 
@@ -74,7 +87,24 @@ function hasValidOrigin(request: Request) {
   }
 
   try {
-    return new URL(origin).host === new URL(request.url).host;
+    const originUrl = new URL(origin);
+    const allowedHosts = new Set<string>();
+
+    const forwardedHost = getForwardedHost(request);
+
+    if (forwardedHost) {
+      allowedHosts.add(normaliseHost(forwardedHost));
+    }
+
+    allowedHosts.add(normaliseHost(new URL(request.url).host));
+
+    const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+
+    if (configuredSiteUrl) {
+      allowedHosts.add(normaliseHost(new URL(configuredSiteUrl).host));
+    }
+
+    return allowedHosts.has(normaliseHost(originUrl.host));
   } catch {
     return false;
   }
@@ -87,7 +117,7 @@ async function verifyTurnstile({
   token: string;
   remoteIp: string;
 }) {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
+  const secret = process.env.TURNSTILE_SECRET;
 
   if (!secret) {
     return !isProductionEnvironment();
