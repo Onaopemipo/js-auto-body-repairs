@@ -33,7 +33,10 @@
     "deploy:inspect": "node scripts/deployment/inspectPackage.mjs",
     "deploy:verify-env": "node scripts/deployment/verifyEnvironment.mjs",
     "deploy:smoke": "node scripts/deployment/smokeTest.mjs",
-    "cpanel:build": "node scripts/deployment/cpanelBuild.mjs"
+    "cpanel:build": "node scripts/deployment/cpanelBuild.mjs",
+    "validate:linux-deployment": "node scripts/validateLinuxDeployment.mjs",
+    "deploy:linux": "npm run validate && node scripts/deployment/buildLinuxStandalone.mjs && npm run deploy:linux:inspect",
+    "deploy:linux:inspect": "node scripts/deployment/inspectLinuxStandalone.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

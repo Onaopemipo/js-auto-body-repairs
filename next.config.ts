@@ -37,6 +37,8 @@ const previewHeaders = indexable
     ];
 
 const nextConfig: NextConfig = {
+  output: "standalone",
+
   images: {
     formats: ["image/avif", "image/webp"],
   },
