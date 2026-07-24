@@ -56,3 +56,9 @@ next-env.d.ts
 
 # cPanel build diagnostics
 cpanel-build.log
+
+# Generated post-launch verification artifacts
+.post-launch-artifacts/
+
+# Local production build variables
+.env.production.local

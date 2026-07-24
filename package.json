@@ -36,7 +36,15 @@
     "cpanel:build": "node scripts/deployment/cpanelBuild.mjs",
     "validate:linux-deployment": "node scripts/validateLinuxDeployment.mjs",
     "deploy:linux": "npm run validate && node scripts/deployment/buildLinuxStandalone.mjs && npm run deploy:linux:inspect",
-    "deploy:linux:inspect": "node scripts/deployment/inspectLinuxStandalone.mjs"
+    "deploy:linux:inspect": "node scripts/deployment/inspectLinuxStandalone.mjs",
+    "postlaunch:production": "node scripts/postlaunch/verifyProduction.mjs",
+    "postlaunch:quote": "node scripts/postlaunch/verifyQuoteDelivery.mjs",
+    "postlaunch:analytics": "node scripts/postlaunch/verifyAnalytics.mjs",
+    "postlaunch:mobile": "node scripts/postlaunch/verifyMobile.mjs",
+    "postlaunch:logs": "bash scripts/postlaunch/readProductionLogs.sh",
+    "postlaunch:lighthouse": "lighthouse https://jsautobodyrepairs.com.au --view --preset=desktop",
+    "postlaunch:lighthouse:mobile": "lighthouse https://jsautobodyrepairs.com.au --view --form-factor=mobile --screenEmulation.mobile=true",
+    "postlaunch:verify": "npm run postlaunch:production && npm run postlaunch:analytics && npm run postlaunch:mobile"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -68,6 +76,8 @@
     "@types/three": "^0.185.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "lighthouse": "^13.4.1",
+    "playwright": "^1.61.1",
     "prettier": "^3.9.5",
     "tailwindcss": "^4",
     "typescript": "^5"
