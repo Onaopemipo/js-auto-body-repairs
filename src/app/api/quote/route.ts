@@ -110,13 +110,7 @@ function hasValidOrigin(request: Request) {
   }
 }
 
-async function verifyTurnstile({
-  token,
-  remoteIp,
-}: {
-  token: string;
-  remoteIp: string;
-}) {
+async function verifyTurnstile({ token }: { token: string }) {
   const secret = process.env.TURNSTILE_SECRET;
 
   if (!secret) {
@@ -130,7 +124,6 @@ async function verifyTurnstile({
   const body = new URLSearchParams({
     secret,
     response: token,
-    remoteip: remoteIp,
   });
 
   const response = await fetch(
@@ -148,7 +141,20 @@ async function verifyTurnstile({
 
   const result = (await response.json()) as {
     success: boolean;
+    hostname?: string;
+    action?: string;
+    "error-codes"?: string[];
   };
+
+  if (!result.success) {
+    console.error("Turnstile verification failed:", {
+      errorCodes: result["error-codes"] ?? [],
+      hostname: result.hostname ?? null,
+      action: result.action ?? null,
+      tokenPresent: Boolean(token),
+      tokenLength: token.length,
+    });
+  }
 
   return result.success;
 }
@@ -254,7 +260,6 @@ export async function POST(request: Request) {
 
     const turnstilePassed = await verifyTurnstile({
       token: quote.turnstileToken,
-      remoteIp: clientIp,
     });
 
     if (!turnstilePassed) {
