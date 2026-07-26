@@ -64,8 +64,10 @@ const location = fs.readFileSync(
   "utf8",
 );
 
-if (!location.includes("Google Maps placeholder")) {
-  failures.push("Location preview does not identify the map placeholder.");
+if (!location.includes("ContactMap") || !location.includes("<ContactMap />")) {
+  failures.push(
+    "Location preview must render the shared ContactMap component.",
+  );
 }
 
 if (failures.length) {
