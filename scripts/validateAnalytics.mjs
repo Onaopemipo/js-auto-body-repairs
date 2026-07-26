@@ -53,8 +53,8 @@ const webVitals = read("src/lib/performance/report-web-vital.ts");
 const checks = [
   ["analytics provider mount", layout, "<AnalyticsProvider"],
   ["consent banner mount", layout, "<AnalyticsConsentBanner"],
-  ["conditional GA loading", provider, "shouldLoadAnalytics"],
-  ["Google tag script", provider, "googletagmanager.com/gtag/js"],
+  ["conditional GTM loading", provider, "shouldLoadAnalytics"],
+  ["Google Tag Manager loader", provider, "googletagmanager.com/gtm.js"],
   [
     "analytics consent denied by default",
     provider,
@@ -97,9 +97,9 @@ const checks = [
   ],
   ["Web Vitals analytics event", webVitals, '"web_vital"'],
   [
-    "measurement ID environment variable",
+    "GTM container ID environment variable",
     envExample,
-    "NEXT_PUBLIC_GA_MEASUREMENT_ID=",
+    "NEXT_PUBLIC_GTM_ID=",
   ],
   ["privacy analytics disclosure", privacy, "Google Analytics"],
   ["cookie analytics disclosure", cookies, "Google Analytics"],
@@ -114,6 +114,17 @@ for (const [label, source, needle] of checks) {
 if (/G-[A-Z0-9]{6,}/.test(envExample.replace("G-XXXXXXXXXX", ""))) {
   failures.push(
     "A real Google Analytics Measurement ID appears to be committed in .env.example.",
+  );
+}
+
+
+if (
+  /GTM-[A-Z0-9]{5,}/.test(
+    envExample.replace("GTM-XXXXXXX", ""),
+  )
+) {
+  failures.push(
+    "A real GTM container ID appears to be committed in .env.example.",
   );
 }
 

@@ -2,12 +2,18 @@
 
 import { usePathname } from "next/navigation";
 import Script from "next/script";
-import { useEffect, useState } from "react";
-
+import { useEffect } from "react";
 import { analyticsConfig } from "@/config/analytics";
-import { trackAnalyticsEvent, trackPageView } from "@/lib/analytics/events";
-import { useAnalyticsConsent } from "@/lib/analytics/use-analytics-consent";
-import type { AnalyticsConsent } from "@/types/analytics";
+import {
+  trackAnalyticsEvent,
+  trackPageView,
+} from "@/lib/analytics/events";
+import {
+  useAnalyticsConsent,
+} from "@/lib/analytics/use-analytics-consent";
+import type {
+  AnalyticsConsent,
+} from "@/types/analytics";
 
 function initialiseDataLayer() {
   window.dataLayer = window.dataLayer || [];
@@ -31,19 +37,64 @@ function updateConsent(consent: AnalyticsConsent) {
     return;
   }
 
+  const analyticsStorage =
+    consent === "granted" ? "granted" : "denied";
+
   window.gtag("consent", "update", {
-    analytics_storage: consent === "granted" ? "granted" : "denied",
+    analytics_storage: analyticsStorage,
     ad_storage: "denied",
     ad_user_data: "denied",
     ad_personalization: "denied",
   });
+
+  window.dataLayer.push({
+    event:
+      consent === "granted"
+        ? "analytics_consent_granted"
+        : "analytics_consent_denied",
+    analytics_consent: consent,
+  });
+}
+
+function createGtmLoader(containerId: string) {
+  return `
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+
+      var firstScript=d.getElementsByTagName(s)[0];
+      var script=d.createElement(s);
+      var layer=l!='dataLayer'?'&l='+l:'';
+
+      script.async=true;
+      script.src=
+        'https://www.googletagmanager.com/gtm.js?id='+
+        i+layer;
+
+      firstScript.parentNode.insertBefore(
+        script,
+        firstScript
+      );
+    })(
+      window,
+      document,
+      'script',
+      'dataLayer',
+      '${containerId}'
+    );
+  `;
 }
 
 export function AnalyticsProvider() {
   const pathname = usePathname();
   const consent = useAnalyticsConsent();
 
-  const [analyticsReady, setAnalyticsReady] = useState(false);
+  const shouldLoadAnalytics =
+    analyticsConfig.enabled &&
+    consent === "granted";
 
   useEffect(() => {
     initialiseDataLayer();
@@ -54,6 +105,12 @@ export function AnalyticsProvider() {
   }, [consent]);
 
   useEffect(() => {
+    if (consent === "granted") {
+      trackPageView(pathname);
+    }
+  }, [consent, pathname]);
+
+  useEffect(() => {
     function handleTrackedClick(event: MouseEvent) {
       const target = event.target;
 
@@ -61,23 +118,27 @@ export function AnalyticsProvider() {
         return;
       }
 
-      const trackedElement = target.closest<HTMLElement>(
-        "[data-analytics-event]",
-      );
+      const trackedElement =
+        target.closest<HTMLElement>(
+          "[data-analytics-event]",
+        );
 
       if (!trackedElement) {
         return;
       }
 
-      const eventName = trackedElement.dataset.analyticsEvent;
+      const eventName =
+        trackedElement.dataset.analyticsEvent;
 
       if (!eventName) {
         return;
       }
 
       trackAnalyticsEvent(eventName, {
-        event_label: trackedElement.dataset.analyticsLabel,
-        event_location: trackedElement.dataset.analyticsLocation,
+        event_label:
+          trackedElement.dataset.analyticsLabel,
+        event_location:
+          trackedElement.dataset.analyticsLocation,
         link_url:
           trackedElement instanceof HTMLAnchorElement
             ? trackedElement.href
@@ -85,36 +146,32 @@ export function AnalyticsProvider() {
       });
     }
 
-    document.addEventListener("click", handleTrackedClick);
+    document.addEventListener(
+      "click",
+      handleTrackedClick,
+    );
 
     return () => {
-      document.removeEventListener("click", handleTrackedClick);
+      document.removeEventListener(
+        "click",
+        handleTrackedClick,
+      );
     };
   }, []);
 
-  useEffect(() => {
-    if (analyticsReady && consent === "granted") {
-      trackPageView(pathname);
-    }
-  }, [analyticsReady, consent, pathname]);
+  if (!shouldLoadAnalytics) {
+    return null;
+  }
 
-  const shouldLoadAnalytics = analyticsConfig.enabled && consent === "granted";
-
-  return shouldLoadAnalytics ? (
+  return (
     <Script
-      id="google-analytics-script"
-      src={`https://www.googletagmanager.com/gtag/js?id=${analyticsConfig.measurementId}`}
+      id="google-tag-manager"
       strategy="afterInteractive"
-      onLoad={() => {
-        window.gtag("js", new Date());
-
-        window.gtag("config", analyticsConfig.measurementId, {
-          send_page_view: false,
-          anonymize_ip: true,
-        });
-
-        setAnalyticsReady(true);
+      dangerouslySetInnerHTML={{
+        __html: createGtmLoader(
+          analyticsConfig.containerId,
+        ),
       }}
     />
-  ) : null;
+  );
 }

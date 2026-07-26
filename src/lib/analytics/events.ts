@@ -1,12 +1,25 @@
 import { analyticsConfig } from "@/config/analytics";
-import { readAnalyticsConsent } from "@/lib/analytics/consent";
-import type { AnalyticsEventParameters } from "@/types/analytics";
+import {
+  readAnalyticsConsent,
+} from "@/lib/analytics/consent";
+import type {
+  AnalyticsEventParameters,
+} from "@/types/analytics";
 
 function analyticsAvailable() {
   return (
     typeof window !== "undefined" &&
-    typeof window.gtag === "function" &&
     readAnalyticsConsent() === "granted"
+  );
+}
+
+function removeUndefinedValues(
+  parameters: AnalyticsEventParameters,
+) {
+  return Object.fromEntries(
+    Object.entries(parameters).filter(
+      ([, value]) => value !== undefined,
+    ),
   );
 }
 
@@ -22,7 +35,12 @@ export function trackAnalyticsEvent(
     return;
   }
 
-  window.gtag("event", name, parameters);
+  window.dataLayer = window.dataLayer || [];
+
+  window.dataLayer.push({
+    event: name,
+    ...removeUndefinedValues(parameters),
+  });
 }
 
 export function trackPageView(pathname: string) {
