@@ -35,7 +35,7 @@ const checks = [
   ["privacy sitemap route", sitemap, 'path: "/privacy"'],
   ["terms sitemap route", sitemap, 'path: "/terms"'],
   ["cookies sitemap route", sitemap, 'path: "/cookies"'],
-  ["quote fallback phone spacing", quoteForm, "Please call 0410 466 916"],
+  ["quote fallback phone spacing", quoteForm, "Please call 0481 214 187"],
 ];
 
 for (const [label, source, needle] of checks) {

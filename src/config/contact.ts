@@ -23,6 +23,10 @@ export interface BusinessHoursEntry {
 const encodedAddress = "816+German+Church+Road,+Redland+Bay+QLD+4165";
 
 export const contactConfig = {
+  hoursSummary: {
+    weekdays: "Monday – Friday: 8:30 AM – 4:30 PM",
+    weekends: "Saturday – Sunday: Closed",
+  },
   businessName: "JS Auto Body Repairs",
 
   address: {
@@ -36,9 +40,9 @@ export const contactConfig = {
   },
 
   phone: {
-    display: "0410 466 916",
-    href: "tel:0410466916",
-    international: "+61410466916",
+    display: "0481 214 187",
+    href: "tel:0481214187",
+    international: "+61481214187",
   },
 
   timeZone: "Australia/Brisbane",

@@ -19,7 +19,7 @@ Verified business information:
 
 - JS Auto Body Repairs
 - 816 German Church Road, Redland Bay QLD 4165
-- 0410 466 916
+- 0481 214 187
 - Monday to Friday, 8:30 AM to 4:30 PM
 - Saturday and Sunday closed
 

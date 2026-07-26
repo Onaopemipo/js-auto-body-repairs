@@ -14,7 +14,7 @@ import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 export const metadata = buildPageMetadata({
   title: "Contact JS Auto Body Repairs",
   description:
-    "Contact JS Auto Body Repairs at 816 German Church Road, Redland Bay QLD 4165, or call 0410 466 916.",
+    "Contact JS Auto Body Repairs at 816 German Church Road, Redland Bay QLD 4165, or call 0481 214 187.",
   path: "/contact",
 });
 

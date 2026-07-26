@@ -61,7 +61,7 @@ const checks = [
   ["visible service FAQ", servicePage, "<ServiceFaqSection"],
   ["FAQ schema mount", servicePage, "<ServiceFaqSchema"],
   ["canonical address", contactConfig, "816 German Church Road"],
-  ["canonical telephone", contactConfig, "0410 466 916"],
+  ["canonical telephone", contactConfig, "0481 214 187"],
   ["static social photograph", seoConfig, "/media/hero/hero-desktop.webp"],
 ];
 

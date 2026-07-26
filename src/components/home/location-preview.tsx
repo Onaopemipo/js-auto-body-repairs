@@ -2,7 +2,7 @@ import { ArrowUpRight, Clock3, MapPin } from "lucide-react";
 
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
-import { siteConfig } from "@/config/site";
+import { contactConfig } from "@/config/contact";
 
 export function LocationPreview() {
   return (
@@ -13,12 +13,15 @@ export function LocationPreview() {
             <p className="eyebrow">Workshop location</p>
 
             <h2 className="display-heading mt-5 text-4xl leading-[1.06] sm:text-5xl">
-              Bring the vehicle in for a proper assessment.
+              Bring your vehicle to our Redland Bay workshop for a professional
+              assessment.
             </h2>
 
             <p className="body-copy mt-6 text-base">
-              The exact address, opening hours and Google Maps integration will
-              be added once the final business details are confirmed.
+              We inspect collision damage, discuss the repair process, and
+              provide honest advice with an obligation-free quote. Conveniently
+              located in Redland Bay, we serve customers throughout the Redlands
+              and South East Queensland.
             </p>
 
             <div className="mt-8 space-y-4 text-sm text-white/72">
@@ -27,7 +30,7 @@ export function LocationPreview() {
                   aria-hidden="true"
                   className="size-4 text-[var(--brand-primary-hover)]"
                 />
-                <span>{siteConfig.address || "Workshop address pending"}</span>
+                <span>{contactConfig.address.formatted}</span>
               </div>
 
               <div className="flex items-center gap-3">
@@ -35,7 +38,7 @@ export function LocationPreview() {
                   aria-hidden="true"
                   className="size-4 text-[var(--brand-primary-hover)]"
                 />
-                <span>Opening hours pending</span>
+                <span>{`${contactConfig.hoursSummary.weekdays} • ${contactConfig.hoursSummary.weekends}`}</span>
               </div>
             </div>
 
