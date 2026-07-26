@@ -64,3 +64,8 @@ cpanel-build.log
 .env.production.local
 
 .env.development.local
+
+# Sanity generated output
+.sanity/
+dist/
+sanity-schema.json
