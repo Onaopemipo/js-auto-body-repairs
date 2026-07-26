@@ -1,5 +1,6 @@
 import { ArrowUpRight, Clock3, MapPin } from "lucide-react";
 
+import { ContactMap } from "@/components/contact/contact-map";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { contactConfig } from "@/config/contact";
@@ -18,27 +19,33 @@ export function LocationPreview() {
             </h2>
 
             <p className="body-copy mt-6 text-base">
-              We inspect collision damage, discuss the repair process, and
+              We inspect collision damage, discuss the repair process and
               provide honest advice with an obligation-free quote. Conveniently
               located in Redland Bay, we serve customers throughout the Redlands
               and South East Queensland.
             </p>
 
             <div className="mt-8 space-y-4 text-sm text-white/72">
-              <div className="flex items-center gap-3">
+              <div className="flex items-start gap-3">
                 <MapPin
                   aria-hidden="true"
-                  className="size-4 text-[var(--brand-primary-hover)]"
+                  className="mt-0.5 size-4 shrink-0 text-[var(--brand-primary-hover)]"
                 />
+
                 <span>{contactConfig.address.formatted}</span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-start gap-3">
                 <Clock3
                   aria-hidden="true"
-                  className="size-4 text-[var(--brand-primary-hover)]"
+                  className="mt-0.5 size-4 shrink-0 text-[var(--brand-primary-hover)]"
                 />
-                <span>{`${contactConfig.hoursSummary.weekdays} • ${contactConfig.hoursSummary.weekends}`}</span>
+
+                <span>
+                  {contactConfig.hoursSummary.weekdays}
+                  <br />
+                  {contactConfig.hoursSummary.weekends}
+                </span>
               </div>
             </div>
 
@@ -47,6 +54,9 @@ export function LocationPreview() {
               variant="secondary"
               size="large"
               className="group mt-8 w-fit"
+              data-analytics-event="quote_cta_click"
+              data-analytics-label="Contact the workshop"
+              data-analytics-location="homepage_location"
             >
               Contact the workshop
               <ArrowUpRight
@@ -56,33 +66,8 @@ export function LocationPreview() {
             </ButtonLink>
           </div>
 
-          <div className="relative min-h-[26rem] overflow-hidden border border-white/10 bg-[linear-gradient(145deg,#202024,#0b0b0c)]">
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:36px_36px]"
-            />
-
-            <div
-              aria-hidden="true"
-              className="absolute left-[44%] top-[38%] size-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--brand-primary)]/18 blur-2xl"
-            />
-
-            <div className="absolute left-[44%] top-[38%] -translate-x-1/2 -translate-y-1/2">
-              <div className="grid size-16 place-items-center rounded-full border-8 border-white/10 bg-[var(--brand-primary)] shadow-[0_18px_45px_rgba(231,7,11,0.34)]">
-                <MapPin aria-hidden="true" className="size-6 text-white" />
-              </div>
-            </div>
-
-            <div className="absolute inset-x-6 bottom-6 border border-white/10 bg-black/60 p-5 backdrop-blur-xl">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--brand-primary-hover)]">
-                Google Maps placeholder
-              </p>
-
-              <p className="mt-2 text-sm text-white/68">
-                Live map, route planning and location finder integration will be
-                added in the contact phase.
-              </p>
-            </div>
+          <div className="min-h-[32rem]">
+            <ContactMap />
           </div>
         </div>
       </Container>
