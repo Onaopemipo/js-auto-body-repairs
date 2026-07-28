@@ -49,7 +49,8 @@
     "cms:build": "sanity build",
     "cms:schema:extract": "sanity schema extract --path=./sanity-schema.json",
     "validate:cms": "node scripts/cms/validateCmsFoundation.mjs",
-    "validate:cms-gallery": "node scripts/cms/validateGalleryCms.mjs"
+    "validate:cms-gallery": "node scripts/cms/validateGalleryCms.mjs",
+    "validate:cms-gallery-ui": "node scripts/cms/validateGalleryUi.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
