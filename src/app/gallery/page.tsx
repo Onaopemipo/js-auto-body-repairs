@@ -1,18 +1,16 @@
-import type { Metadata } from "next";
-
+import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import { GalleryProjectGrid } from "@/components/gallery/gallery-project-grid";
 import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/config/site";
 import { getGalleryProjects } from "@/lib/gallery/gallery-content";
+import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Our Work",
   description:
     "Explore completed collision repairs, dent removal, panel restoration and paint refinishing projects by JS Auto Body Repairs.",
-  alternates: {
-    canonical: "/gallery",
-  },
-};
+  path: "/gallery",
+});
 
 export const revalidate = 300;
 
@@ -21,6 +19,13 @@ export default async function GalleryPage() {
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Our Work", path: "/gallery" },
+        ]}
+      />
+
       <section className="border-b border-white/10 pb-16 pt-14 sm:pb-20 sm:pt-20">
         <Container>
           <p className="eyebrow">Our work</p>
