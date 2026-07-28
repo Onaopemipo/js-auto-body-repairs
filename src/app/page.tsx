@@ -10,6 +10,7 @@ import { TrustStrip } from "@/components/home/trust-strip";
 import { WhyChooseUs } from "@/components/home/why-choose-us";
 import { Reveal } from "@/components/motion/reveal";
 import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
+import { SanityFeaturedWork } from "@/components/home/sanity-featured-work";
 
 export const metadata = buildPageMetadata({
   title: "Collision Repair and Auto Body Restoration",
@@ -44,6 +45,7 @@ export default function HomePage() {
         <InsuranceSupport />
       </Reveal>
       <Reveal>
+        <SanityFeaturedWork />
         <LocationPreview />
       </Reveal>
       <Reveal>

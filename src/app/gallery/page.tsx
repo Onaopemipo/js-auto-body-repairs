@@ -1,56 +1,47 @@
-import { Suspense } from "react";
-import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
+import type { Metadata } from "next";
 
-import { GalleryExperience } from "@/components/gallery/gallery-experience";
-import { GalleryImageSchema } from "@/components/gallery/gallery-image-schema";
-import { PageCta } from "@/components/pages/page-cta";
-import { PageHero } from "@/components/pages/page-hero";
+import { GalleryProjectGrid } from "@/components/gallery/gallery-project-grid";
 import { Container } from "@/components/ui/container";
-import { galleryProjects } from "@/content/gallery";
-import { siteContent } from "@/content/site-content";
-import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
+import { siteConfig } from "@/config/site";
+import { getGalleryProjects } from "@/lib/gallery/gallery-content";
 
-export const metadata = buildPageMetadata({
-  title: "Repair Gallery",
+export const metadata: Metadata = {
+  title: "Our Work",
   description:
-    "View authentic collision repair, paint refinishing and dent removal projects completed by JS Auto Body Repairs in Redland Bay.",
-  path: "/gallery",
-});
+    "Explore completed collision repairs, dent removal, panel restoration and paint refinishing projects by JS Auto Body Repairs.",
+  alternates: {
+    canonical: "/gallery",
+  },
+};
 
-export default function GalleryPage() {
+export const revalidate = 300;
+
+export default async function GalleryPage() {
+  const result = await getGalleryProjects();
+
   return (
     <>
-      <BreadcrumbSchema
-        items={[
-          { name: "Home", path: "/" },
-          { name: "Gallery", path: "/gallery" },
-        ]}
-      />
-
-      <GalleryImageSchema projects={galleryProjects} />
-
-      <PageHero
-        eyebrow="Gallery"
-        title={siteContent.gallery.title}
-        description={siteContent.gallery.description}
-      />
-
-      <section className="section-spacing">
+      <section className="border-b border-white/10 pb-16 pt-14 sm:pb-20 sm:pt-20">
         <Container>
-          <Suspense
-            fallback={
-              <div className="min-h-72 animate-pulse border border-white/10 bg-white/[0.025]" />
-            }
-          >
-            <GalleryExperience />
-          </Suspense>
+          <p className="eyebrow">Our work</p>
+
+          <h1 className="display-heading mt-5 max-w-4xl text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
+            Repair quality you can see.
+          </h1>
+
+          <p className="body-copy mt-7 max-w-2xl text-base sm:text-lg">
+            Browse completed vehicle repairs from {siteConfig.name}. Each
+            project reflects our focus on accurate panel alignment, careful
+            preparation and professional refinishing.
+          </p>
         </Container>
       </section>
 
-      <PageCta
-        title="Want your vehicle restored to the same standard?"
-        description="Send us the details and photos of the damage to begin your quote."
-      />
+      <section className="section-spacing">
+        <Container>
+          <GalleryProjectGrid projects={result.projects} />
+        </Container>
+      </section>
     </>
   );
 }
