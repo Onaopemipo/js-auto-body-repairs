@@ -122,6 +122,8 @@ export function GalleryImage({
         sizes={sizes}
         quality={quality}
         priority={priority}
+        fetchPriority={priority ? "high" : "auto"}
+        decoding="async"
         className={className}
         {...blurProps}
       />
@@ -139,6 +141,8 @@ export function GalleryImage({
       sizes={sizes}
       quality={quality}
       priority={priority}
+      fetchPriority={priority ? "high" : "auto"}
+      decoding="async"
       className={className}
       {...blurProps}
     />

@@ -50,7 +50,7 @@ export async function SanityFeaturedWork() {
             <GalleryProjectCard
               key={project.id}
               project={project}
-              priority={index < 2}
+              priority={index === 0}
               analyticsLocation="homepage_featured_work"
             />
           ))}

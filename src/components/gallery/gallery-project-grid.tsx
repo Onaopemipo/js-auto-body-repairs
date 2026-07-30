@@ -41,7 +41,7 @@ export function GalleryProjectGrid({ projects }: GalleryProjectGridProps) {
         <GalleryProjectCard
           key={project.id}
           project={project}
-          priority={index < 3}
+          priority={index === 0}
           analyticsLocation="gallery_page"
         />
       ))}
