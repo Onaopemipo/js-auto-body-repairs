@@ -33,7 +33,9 @@ export function ProjectImageCollection({
             <div className="relative aspect-[4/3] overflow-hidden">
               <GalleryImage
                 image={image}
-                sizes="(min-width: 640px) 50vw, 100vw"
+                preset="grid"
+                sizes="(min-width: 1280px) 42vw, (min-width: 640px) 46vw, calc(100vw - 2rem)"
+                quality={78}
                 fill
                 className="object-cover"
               />

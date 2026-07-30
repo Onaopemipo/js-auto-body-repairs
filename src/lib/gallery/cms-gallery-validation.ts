@@ -10,7 +10,42 @@ const optionalNumber = z
   .nullish()
   .transform((value) => value ?? undefined);
 
+const galleryImageCropSchema = z.object({
+  top: z.number(),
+  right: z.number(),
+  bottom: z.number(),
+  left: z.number(),
+});
+
+const galleryImageHotspotSchema = z.object({
+  x: z.number(),
+  y: z.number(),
+  height: z.number(),
+  width: z.number(),
+});
+
+const galleryImageSourceSchema = z.object({
+  _type: z.literal("image"),
+
+  asset: z.object({
+    _type: z.literal("reference"),
+    _ref: z.string().min(1),
+  }),
+
+  crop: galleryImageCropSchema
+    .nullish()
+    .transform((value) => value ?? undefined),
+
+  hotspot: galleryImageHotspotSchema
+    .nullish()
+    .transform((value) => value ?? undefined),
+});
+
 const galleryImageSchema = z.object({
+  source: galleryImageSourceSchema
+    .nullish()
+    .transform((value) => value ?? undefined),
+
   assetId: z.string().min(1),
   url: z.string().url(),
   alt: z.string().min(1),

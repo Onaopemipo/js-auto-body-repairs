@@ -38,18 +38,19 @@ const previewHeaders = indexable
 
 const nextConfig: NextConfig = {
   output: "standalone",
+
   images: {
     remotePatterns: [
       {
         protocol: "https",
-
         hostname: "cdn.sanity.io",
-
         pathname: "/images/**",
       },
     ],
-
     formats: ["image/avif", "image/webp"],
+    deviceSizes: [480, 640, 768, 900, 1080, 1200, 1400, 1600, 2000, 2400],
+    imageSizes: [24, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 31536000,
   },
 
   experimental: {

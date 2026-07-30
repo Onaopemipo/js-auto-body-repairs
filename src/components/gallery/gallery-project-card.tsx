@@ -54,7 +54,9 @@ export function GalleryProjectCard({
         <div className="relative aspect-[4/3] overflow-hidden bg-black/30">
           <GalleryImage
             image={project.coverImage}
-            sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+            preset="card"
+            sizes="(min-width: 1280px) 30vw, (min-width: 768px) 46vw, calc(100vw - 2rem)"
+            quality={78}
             priority={priority}
             fill
             className="object-cover transition duration-700 group-hover:scale-[1.035]"

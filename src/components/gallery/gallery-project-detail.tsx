@@ -93,7 +93,10 @@ export function GalleryProjectDetail({ project }: GalleryProjectDetailProps) {
             <div className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-black/30">
               <GalleryImage
                 image={project.coverImage}
-                sizes="(min-width: 1024px) 60vw, 100vw"
+                preset="hero"
+                sizes="(min-width: 1280px) 58vw, (min-width: 1024px) 56vw, calc(100vw - 2rem)"
+                quality={82}
+                retina={false}
                 priority
                 fill
                 className="object-cover"

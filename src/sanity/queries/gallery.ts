@@ -2,6 +2,15 @@ import { defineQuery } from "next-sanity";
 
 const galleryImageProjection = `
   {
+    "source": {
+      "_type": "image",
+      "asset": {
+        "_type": "reference",
+        "_ref": asset._ref
+      },
+      crop,
+      hotspot
+    },
     "assetId": asset->_id,
     "url": asset->url,
     "width": asset->metadata.dimensions.width,

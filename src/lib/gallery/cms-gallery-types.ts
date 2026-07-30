@@ -1,6 +1,31 @@
 import type { PortableTextBlock } from "@portabletext/types";
 
+export interface CmsSanityImageCrop {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+export interface CmsSanityImageHotspot {
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+}
+
+export interface CmsSanityImageSource {
+  _type: "image";
+  asset: {
+    _type: "reference";
+    _ref: string;
+  };
+  crop?: CmsSanityImageCrop;
+  hotspot?: CmsSanityImageHotspot;
+}
+
 export interface CmsGalleryImage {
+  source?: CmsSanityImageSource;
   assetId: string;
   url: string;
   alt: string;
